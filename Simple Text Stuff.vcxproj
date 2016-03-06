@@ -140,6 +140,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\TextGame\Combat.cpp" />
     <ClCompile Include="src\TextGame\Creature.cpp" />
+    <ClCompile Include="src\TextGame\Interface.cpp" />
     <ClCompile Include="src\TextGame\Navigation.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +148,7 @@
     <ClInclude Include="include\TextGame\Creature.hpp" />
     <ClInclude Include="include\TextGame\CreatureInfo.hpp" />
     <ClInclude Include="include\TextGame\Globals.hpp" />
+    <ClInclude Include="include\TextGame\Interface.hpp" />
     <ClInclude Include="include\TextGame\Navigation.hpp" />
     <ClInclude Include="include\TextGame\Types.hpp" />
   </ItemGroup>

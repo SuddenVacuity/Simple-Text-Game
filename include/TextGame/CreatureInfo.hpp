@@ -17,6 +17,7 @@ namespace TextGame
 	public:
 		u32 id;
 		std::string name;
+		std::string namef;
 		u32 exp;
 		f32 level;
 

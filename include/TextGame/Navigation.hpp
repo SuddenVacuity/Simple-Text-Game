@@ -52,7 +52,7 @@ struct Navigation
 	}
 
 	void move(Navigation& move_x, Navigation& move_y);
-	void lost(); // return location
+	void getLocation(); // return location
 };
 } // end TextGame
 

@@ -15,6 +15,7 @@ namespace TextGame
 	{
 	public:
 		std::string name;
+		std::string namef;
 		u32 exp;
 		f32 level;
 
@@ -58,8 +59,14 @@ namespace TextGame
 		f32 damage;
 		u32 defense;
 
+		u32 rewardExp;
+
 		EnemyA();
 
+		// spawn at higher than lv 1
+		TextGame::EnemyA::EnemyA(int mExp, std::string mName);
+
+		void EnemyA::setEnemy(std::string mName, int mExp, int mHitPointsBase, int mDamageBase, int mDefenseBase, float mHitPointsMult, float mDamageMult, float mDefenseMult);
 		void attack(Creature& c);
 	};
 
@@ -83,7 +90,12 @@ namespace TextGame
 		f32 damage;
 		u32 defense;
 
+		u32 rewardExp = 1;
+
 		EnemyB();
+
+		// spawn at higher than lv 1
+		TextGame::EnemyB::EnemyB(int monsterExp, std::string monsterName);
 
 		void attack(Creature& c);
 	};
