@@ -19,8 +19,8 @@ FILE MAP
 =================
 Types.hpp >> Globals.hpp >> start all file lines with these
 
-
-CreatureInfo.hpp >> Creature.hpp >> Creature.cpp >>
+				   Interface.hpp >> Combat.hpp >> main
+CreatureInfo.hpp >> Creature.hpp >> Combat.hpp >> main
 
 
 
@@ -29,26 +29,28 @@ CreatureInfo.hpp >> Creature.hpp >> Creature.cpp >>
 
 
 
-//#include <TextGame/Interface.hpp>
-
+//#include <TextGame/Interface.hpp> // included in Combat.hpp
+//#include <TextGame/Creature.hpp> // included in Combat.hpp
+#include <TextGame/Combat.hpp>
 //#include <TextGame/Navigation.hpp>
-#include <TextGame/Creature.hpp>
-//#include <TextGame/Combat.hpp>
 
 #include <iostream>
 #include <sstream>
 
 int main (int argc, char* argv)
 {
-bool testingRoom = false;
-bool isCharNamed = false;
-bool isBattling = false;
+// initialize globals - once per run
+testingRoom = false; // Globals.hpp
+isCharNamed = false;
+isBattling = false;
+running = true;
 
-bool running = true;
 while(running)
 {
+TextGame::Player player; //declare player
+TextGame::Player *ptrPlayer; // declare a pointer
+ptrPlayer = &player; // assign address to pointer
 
-TextGame::Player player;
 std::cout << "[Opening Text Here]\n\n\n";
 std::string input; // used by getline()
 
@@ -94,12 +96,14 @@ std::string input; // used by getline()
 		std::cout << "Welcome to the testing room\n";
 		std::cout << "A few debugging and testing features will be put in here.\n\n\n";
 
+		std::cout << "Name: " << player.name << "\nHP: " << player.hitPoints << "/" << player.hitPointsMax << "\n\n\n";
 
 		std::cout << "1. set starting level\n";
-		std::cout << "4. spawn level 10 monster\n";
+		std::cout << "2. test battle function\n";
+		std::cout << "4. spawn monster\n";
 		std::cout << "\n";
 		std::cout << "\n";
-		std::cout << "99. Exit\n";
+		std::cout << "99. Exit to main game\n";
 
 
 		std::getline(std::cin, input);
@@ -113,7 +117,7 @@ std::string input; // used by getline()
 		{
 			std::cout << "Enter level to start.\n\n";
 
-			//FIXME need a better way
+			//FIXME
 			//trying out string stream
 			std::stringstream ss;
 
@@ -141,24 +145,33 @@ std::string input; // used by getline()
 			}
 		 
 			if(n <= 1)
-				player.exp = 0;
+				player.getExp(0); // Creature.cpp
 			else
-				player.exp = (n - 1) * 2;
+				player.getExp((n - 1) * 2);
 
+			player.update();
+			player.heal(player.hitPointsMax); // Creature.cpp
+
+		}
+
+		// test battle function
+		else if(choice == "2")
+		{
+			TextGame::startBattle(ptrPlayer); // Combat.cpp
 		}
 
 		// battle monsterB
 		else if (choice == "4")
 		{
 
-			TextGame::EnemyB enemy(18, "Test Monster");
+			TextGame::Enemy enemy(28, "Test Monster");
+			TextGame::Enemy *ptrEnemy; // declare a pointer
+			ptrEnemy = &enemy; // assign address to pointer
+
 			std::cout << "A wild " << enemy.name << " appeared!\n\n";
 			isBattling = true;
 			while (isBattling == true)
 			{
-				//FIXME make a function
-				player.hitPoints = player.hitPointsBase * player.hitPointsMult;
-
 				std::cout << "--------------------------\n";
 				std::cout << "This debug monster can't hurt you.\n";
 				std::cout << "Enemy Hit Points: " << enemy.hitPoints << "\n\n";
@@ -179,8 +192,7 @@ std::string input; // used by getline()
 					}
 					else
 					{
-						//FIXME player.attack(enemy);
-						enemy.hitPoints = enemy.hitPoints - player.damage;
+						TextGame::playerAttack(ptrPlayer, ptrEnemy);
 						std::cout << "You did " << player.damage << " damage.\n\n";
 					}
 
@@ -188,11 +200,9 @@ std::string input; // used by getline()
 					if (enemy.hitPoints <= 0)
 					{
 						std::cout << "You Win!\n";
-						//FIXME make function V V V
-						player.exp = player.exp + 0;
-						std::cout << "You gained " << 0 << " exp\n\n";
-						//FIXME make function V V V V
-						player.level = player.level + player.exp / 2;
+						player.getExp(0);
+						std::cout << "You gained " << "0" << " exp\n\n";
+						player.update();
 						isBattling = false;
 					}
 					// check enemy is still alive to attack
@@ -204,16 +214,14 @@ std::string input; // used by getline()
 						else
 						{
 							std::cout << enemy.name << " is attacking!.\n";
-							//FIXME enemy.attack(player);
-							player.hitPoints = player.hitPoints - enemy.damage;
-							std::cout << "You took " << enemy.damage << " damage.\n\n\n";
+							std::cout << "You took " << "0" << " damage.\n\n\n";
 						}
 					}
 
 					// lose
 					if (player.hitPoints <= 0)
 					{
-						std::cout << "You died.\nGAME OVER.\n\n";
+						std::cout << "You died.\nHow did you do it?\n\n";
 						std::cout << "1. Restart 2. Exit\n\n";
 
 						std::getline(std::cin, input);
@@ -224,12 +232,19 @@ std::string input; // used by getline()
 						if (choice == "1" || choice == "Restart" || choice == "restart" || choice == "R" || choice == "r")
 						{
 							std::cout << "\n\n\n\n>>>>>>>>>>>>>>>>>>>>  RESTART >>>>>>>>>>>>>>>>>>>>\n\n\n\n\n\n\n\n\n\n";
-							isBattling = false;
+							// FIXME goBack()
+							//TextGame::goBack(); // Interface.cpp
+							isPlaying = false;
 							isCharNamed = false;
+							isBattling = false;
 						}
 						// Exit
 						else if (choice == "2" || choice == "Quit" || choice == "quit" || choice == "Q" || choice == "q")
 						{
+							// FIXME goBack()
+							//TextGame::goBack(); // Interface.cpp
+							isPlaying = false;
+							isCharNamed = false;
 							isBattling = false;
 							running = false;
 						}
@@ -257,169 +272,37 @@ std::string input; // used by getline()
 			std::cout << "Invaid input.\n\n";
 	}
 	
-bool isPlaying = true;
+isPlaying = true; // Globals.hpp
 	while (isPlaying)
 	{
 		// update stats
 		player.update(); // Creature.cpp
 
-		isBattling = false;
+		isBattling = false; // Globals.hpp
 
 		std::cout << "==================================\n";
 		std::cout << "Reach level 15 to win.\n";
 		std::cout << "level " << player.level << "/15\n\n";
 		std::cout << "Enter a number to make a choice.\n";
 
-		if(player.level >= 15)
-			std::cout << "\n\nEnd. the game\n============\n";
 
-		std::cout << "1. Battle\n2. Check\n3. Rest\n\n9. Restart 10. Quit\n";
+		std::cout << "1. Battle\n2. Check\n3. Heal\n\n";
+
+		if (player.level >= 15)
+			std::cout << "8. Win\n";
+
+		std::cout << "9. Restart 10. Quit\n";
 
 		std::getline(std::cin, input);
 		std::string choice = input;
-		std::cout << "\n\n\n\n";
 		std::cin.clear();
 
-
+		std::cout << "\n\n\n\n";
+		
 		// battle monster
 		if (choice == "1" || choice == "Battle" || choice == "battle" || choice == "B" || choice == "b")
 		{
-			TextGame::EnemyA enemy;
-
-			bool isChoosing = true;
-			while (isChoosing == true)
-			{
-				// picking monster to battle
-				std::cout << "Pick a monster to battle.\n\n";
-				std::cout << "1. Weak\n2. Average\n3. Strong\n";
-				std::getline(std::cin, input);
-				std::string choice = input;
-				std::cin.clear();
-
-				std::cout << "\n\n\n\n";
-
-				//set what monster appears
-				//enemy.setEnemy("name", exp, hpbase, dmgbase, defbase, hpmult, dmgmult, defmult)
-				if (choice == "1" || choice == "Weak" || choice == "weak" || choice == "W" || choice == "w")
-				{
-					enemy.setEnemy("Weak Generic Monster", 0, 30, 15, 3, 0.2f, 0.2f, 0.2f); // Creature.cpp
-					isChoosing = false;
-				}
-
-				else if (choice == "2" || choice == "Average" || choice == "average" || choice == "A" || choice == "a")
-				{
-					enemy.setEnemy("Average Generic Monster", 8, 30, 15, 3, 0.2f, 0.2f, 0.2f);
-					isChoosing = false;
-				}
-
-				else if (choice == "3" || choice == "Strong" || choice == "strong" || choice == "S" || choice == "s")
-				{
-					enemy.setEnemy("Strong Generic Monster", 18, 30, 15, 3, 0.2f, 0.2f, 0.2f);
-					isChoosing = false;
-				}
-				else
-					std::cout << "\nInvalid input.\n\n\n";
-
-			}// end isChoosing
-
-			// starting battle
-			std::cout << "A wild " << enemy.name << " appeared!\n\n";
-			isBattling = true;
-			while (isBattling == true)
-			{
-				std::cout << "--------------------------\n";
-				std::cout << "Your Hit Points: " << player.hitPoints << "\n";
-				std::cout << "Enemy Hit Points: " << enemy.hitPoints << "\n\n";
-				std::cout << "What will you do?\n";
-				std::cout << "1. Attack 2. Run\n\n";
-
-				std::getline(std::cin, input);
-				std::string choice = input;
-				std::cin.clear();
-
-				if (choice == "1" || choice == "Attack" || choice == "attack" || choice == "A" || choice == "a")
-				{
-					// make sure hit points don't go under 0
-					if (enemy.hitPoints < player.damage)
-					{
-						enemy.hitPoints = 0;
-						std::cout << "You did " << player.damage << " damage.\n\n";
-					}
-					else
-					{
-						//FIXME player.attack(enemy);
-						enemy.hitPoints = enemy.hitPoints - player.damage;
-						std::cout << "You did " << player.damage << " damage.\n\n";
-					}
-
-					// win
-					if (enemy.hitPoints <= 0)
-					{
-						std::cout << "You Win!\n";
-						//FIXME make function V V V
-						player.exp = player.exp + enemy.rewardExp;
-						std::cout << "You gained " << enemy.rewardExp << " exp\n\n";
-						//FIXME make function V V V
-						player.level = player.level + player.exp / 2;
-						isBattling = false;
-					}
-
-					// check if enemy is still alive to attack
-					if (enemy.hitPoints > 0)
-					{
-						// make sure hit points don't go under 0
-						if (player.hitPoints < enemy.damage)
-							player.hitPoints = 0;
-						else
-						{
-							//FIXME std::cout << enemy.name << " is attacking!.\n";
-							std::cout << "Enemy " << " is attacking!.\n";
-							//FIXME enemy.attack(player);
-							player.hitPoints = player.hitPoints - enemy.damage;
-							std::cout << "You took " << enemy.damage << " damage.\n\n\n";
-						}
-					}
-
-					// lose
-					if (player.hitPoints <= 0)
-					{
-						std::cout << "You died.\nGAME OVER.\n\n";
-						std::cout << "1. Restart 2. Quit\n\n";
-
-						std::getline(std::cin, input);
-						std::string choice = input;
-						std::cin.clear();
-						// restart
-						if (choice == "1" || choice == "Restart" || choice == "restart" || choice == "R" || choice == "r")
-						{
-							std::cout << "\n\n\n\n>>>>>>>>>>>>>>>>>>>>  RESTART >>>>>>>>>>>>>>>>>>>>\n\n\n\n\n\n\n\n\n\n";
-							isBattling = false;
-							isCharNamed = false;
-							isPlaying = false;
-						}
-						// exit
-						else if (choice == "2" || choice == "Quit" || choice == "quit" || choice == "Q" || choice == "q")
-						{
-							isBattling = false;
-							isPlaying = false;
-							running = false;
-						}
-						else
-							std::cout << "Invaid input.\n\n";
-
-					}
-
-				}
-
-				//run
-				else if (choice == "2" || choice == "Run" || choice == "run" || choice == "R" || choice == "r")
-				{
-					std::cout << "You ran away.\n\n\n";
-					isBattling = false;
-				}
-				else
-					std::cout << "Invaid input.\n\n";
-			} // end is battling
+			TextGame:startBattle(ptrPlayer); // Combat.cpp
 		}
 
 		// check character
@@ -436,37 +319,14 @@ bool isPlaying = true;
 		}
 
 		//rest
-		else if (choice == "3" || choice == "Rest" || choice == "rest")
+		else if (choice == "3" || choice == "Heal" || choice == "heal" || choice == "H" || choice == "h")
 		{
-			//FIXME make a function
-			player.hitPoints = player.hitPointsBase * player.hitPointsMult;
+			player.heal(player.hitPointsMax); // Creature.cpp
 			std::cout << "You feel rested and ready for battle.\n\n\n";
 		}
-
-		//restart
-		else if (choice == "9" || choice == "Restart" || choice == "restart")
-		{
-			std::cout << "\n\n\n\n>>>>>>>>>>>>>>>>>>>>  RESTART >>>>>>>>>>>>>>>>>>>>\n\n\n\n\n\n\n\n\n\n";
-			isPlaying = false;
-			isCharNamed = false;
-		}
-
-		// quit
-		else if (choice == "10" || choice == "Quit" || choice == "quit" || choice == "Q" || choice == "q")
-		{
-			isPlaying = false;
-			running = false;
-		}
-
-		//testing room
-		else if (choice == "secret")
-		{
-			testingRoom = true;
-			isPlaying = false;
-		}
-
+		
 		// check if win
-		else if (choice == "End"|| choice == "end" || choice == "End. the game" || choice == "end. the game" || choice == "End the game" || choice == "end the game")
+		else if (choice == "8" || choice == "Win" || choice == "win" || choice == "W" || choice == "w")
 		{
 			if (player.level >= 15)
 			{
@@ -482,10 +342,17 @@ bool isPlaying = true;
 					std::cout << "\n\n\n\n>>>>>>>>>>>>>>>>>>>>  RESTART >>>>>>>>>>>>>>>>>>>>\n\n\n\n\n\n\n\n\n\n";
 					isPlaying = false;
 					isCharNamed = false;
+					isBattling = false;
+					// FIXME goBack()
+					//TextGame::goBack(); // Interface.cpp
 				}
 				else if (choice == "2" || choice == "Quit" || choice == "quit" || choice == "Q" || choice == "q")
 				{
+					// FIXME goBack()
+					//TextGame::goBack(); // Interface.cpp
 					isPlaying = false;
+					isCharNamed = false;
+					isBattling = false;
 					running = false;
 				}
 				else
@@ -494,6 +361,32 @@ bool isPlaying = true;
 
 			else
 				std::cout << "You can't win yet.\n\n";
+		}
+
+		//restart
+		else if (choice == "9" || choice == "Restart" || choice == "restart")
+		{
+			std::cout << "\n\n\n\n>>>>>>>>>>>>>>>>>>>>  RESTART >>>>>>>>>>>>>>>>>>>>\n\n\n\n\n\n\n\n\n\n";
+			// FIXME goBack()
+			//TextGame::goBack(); // Interface.cpp
+		}
+
+		// quit
+		else if (choice == "10" || choice == "Quit" || choice == "quit" || choice == "Q" || choice == "q")
+		{
+			isPlaying = false;
+			isCharNamed = false;
+			isBattling = false;
+			running = false;
+			// FIXME goBack()
+			//TextGame::goBack(); // Interface.cpp
+		}
+
+		//testing room
+		else if (choice == "secret")
+		{
+			testingRoom = true;
+			isPlaying = false;
 		}
 
 		else

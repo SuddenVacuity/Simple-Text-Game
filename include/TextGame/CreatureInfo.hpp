@@ -2,8 +2,8 @@
 #define TEXTGAME_CREATUREINFO_HPP
 
 //	  ==========================================================================================
-//	  =============			  This file contains all base monster				================
-//	  =============					     information							================
+//	  =============			    Creature Class that Player and					================
+//	  =============					Enemy are based off of     					================
 //	  ==========================================================================================
 
 #include <TextGame/Globals.hpp>
@@ -12,10 +12,10 @@
 
 namespace TextGame
 {
+	// TODO set hard caps for stats
 	class Creature 
 	{
 	public:
-		u32 id;
 		std::string name;
 		std::string namef;
 		u32 exp;
@@ -30,10 +30,14 @@ namespace TextGame
 		f32 defenseMult;
 
 		u32 hitPoints;
-		f32 damage;
+		u32 damage;
 		u32 defense;
 
-		virtual void attack(Creature& c) = 0;
+		u32 hitPointsMax;
+		u32 hitDamageMax;
+		u32 hitDefenseMax;
+
+		u32 rewardExp;
 	};
 
 } // end TextGame

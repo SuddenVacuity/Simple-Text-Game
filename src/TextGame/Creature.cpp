@@ -1,7 +1,7 @@
 
 //	  ==========================================================================================
-//	  =============																================
-//	  =============																================
+//	  =============			This file calculates monster info from				================
+//	  =============					 base stats and level						================
 //	  ==========================================================================================
 
 #include <TextGame/Creature.hpp>
@@ -27,6 +27,10 @@ TextGame::Player::Player()
 	hitPoints = hitPointsBase * hitPointsMult;
 	damage = damageBase * damageMult;
 	defense = defenseBase * defenseMult;
+
+	hitPointsMax = hitPointsBase * hitPointsMult;
+	hitDamageMax = damageBase * damageMult;
+	hitDefenseMax = defenseBase * defenseMult;
 }
 TextGame::Player::Player(std::string playerName)
 {
@@ -45,9 +49,13 @@ TextGame::Player::Player(std::string playerName)
 	hitPoints = hitPointsBase * hitPointsMult;
 	damage = damageBase * damageMult;
 	defense = defenseBase * defenseMult;
+
+	hitPointsMax = hitPointsBase * hitPointsMult;
+	hitDamageMax = damageBase * damageMult;
+	hitDefenseMax = defenseBase * defenseMult;
 }
 
-
+// update level and stats to match exp amount
 void Player::update()
 {
 	level = 1 + exp / 2;
@@ -58,11 +66,25 @@ void Player::update()
 
 	damage = damageBase * damageMult;
 	defense = defenseBase * defenseMult;
+
+	hitPointsMax = hitPointsBase * hitPointsMult;
+	hitDamageMax = damageBase * damageMult;
+	hitDefenseMax = defenseBase * defenseMult;
 }
-void Player::attack(Creature& c)
+
+void Player::heal(int amount)
 {
-	c.hitPoints = c.hitPoints - damage;
-	return;
+	int value = hitPoints + amount;
+
+	if(value >= hitPointsMax)
+		hitPoints = hitPointsMax;
+	else
+		hitPoints = hitPoints + amount;
+}
+
+void Player::getExp(int amount)
+{
+	exp = exp + amount;
 }
 
 // =========================================================================
@@ -70,10 +92,10 @@ void Player::attack(Creature& c)
 // =========================================================================
 
 // offensive enemy that dies easily
-TextGame::EnemyA::EnemyA()
+TextGame::Enemy::Enemy()
 {
-	//id = 0;
 	name = "Generic Monster";
+	namef = "Generic Monster";
 	exp = 0;
 	level = 1 + std::sqrt(exp);
 
@@ -89,16 +111,18 @@ TextGame::EnemyA::EnemyA()
 	damage = damageBase * damageMult;
 	defense = defenseBase * defenseMult;
 
+	hitPointsMax = hitPointsBase * hitPointsMult;
+	hitDamageMax = damageBase * damageMult;
+	hitDefenseMax = defenseBase * defenseMult;
+
 	rewardExp = 1;
 }
-
-// spawn at higher than lv 1
-TextGame::EnemyA::EnemyA(int mExp, std::string mName)
+TextGame::Enemy::Enemy(int mExp, std::string mName)
 {
-	//id = 0;
 	name = mName;
+	namef = "TODO";
 	exp = mExp;
-	level = 1 + std::sqrt(exp);
+	level = 1 + exp / 2;
 
 	hitPointsBase = 30;
 	damageBase = 15;
@@ -112,12 +136,18 @@ TextGame::EnemyA::EnemyA(int mExp, std::string mName)
 	damage = damageBase * damageMult;
 	defense = defenseBase * defenseMult;
 
-	rewardExp = 1;
+	hitPointsMax = hitPointsBase * hitPointsMult;
+	hitDamageMax = damageBase * damageMult;
+	hitDefenseMax = defenseBase * defenseMult;
+
+	rewardExp = 1 + level / 5;
 }
 
-void EnemyA::setEnemy(std::string mName, int mExp, int mHitPointsBase, int mDamageBase, int mDefenseBase, float mHitPointsMult, float mDamageMult, float mDefenseMult)
+// create custom enemy
+void Enemy::setEnemy(std::string mName, int mExp, int mHitPointsBase, int mDamageBase, int mDefenseBase, float mHitPointsMult, float mDamageMult, float mDefenseMult)
 {
 	name = mName;
+	namef = "TODO";
 	exp = mExp;
 	level = 1 + exp / 2;
 
@@ -133,70 +163,41 @@ void EnemyA::setEnemy(std::string mName, int mExp, int mHitPointsBase, int mDama
 	damage = damageBase * damageMult;
 	defense = defenseBase * defenseMult;
 
+	hitPointsMax = hitPointsBase * hitPointsMult;
+	hitDamageMax = damageBase * damageMult;
+	hitDefenseMax = defenseBase * defenseMult;
+
 	rewardExp = 1 + level / 5;
 }
-void EnemyA::attack(Creature& c)
+
+// update level and stats to match exp amount
+void Enemy::update()
 {
-	c.hitPoints = c.hitPoints - damage;
-	return;
-}
-
-// =========================================================================
-// =========================================================================
-// =========================================================================
-
-// defensive enemy that does low damage
-TextGame::EnemyB::EnemyB()
-{
-	//id = 1;
-	name = "Standard Monster";
-	exp = 0;
-	level = 1 + std::sqrt(exp);
-
-	hitPointsBase = 80;
-	damageBase = 20;
-	defenseBase = 25;
-
-	hitPointsMult = 0.25f * level + 1.0f;
-	damageMult = 0.2f * level + 1.0f;
-	defenseMult = 0.25f * level + 1.0f;
-
-	hitPoints = hitPointsBase * hitPointsMult;
-	damage = damageBase * damageMult;
-	defense = defenseBase * defenseMult;
-
-	rewardExp = 1;
-}
-
-// spawn at higher than lv 1
-TextGame::EnemyB::EnemyB(int monsterExp, std::string monsterName)
-{
-	//id = 0;
-	name = monsterName;
-	exp = monsterExp;
-	level = 1 + std::sqrt(exp);
-
-	hitPointsBase = 60;
-	damageBase = 15;
-	defenseBase = 3;
+	level = 1 + exp / 2;
 
 	hitPointsMult = 0.2f * level + 1.0f;
-	damageMult = 0.25f * level + 1.0f;
-	defenseMult = 0.15f * level + 1.0f;
+	damageMult = 0.2f * level + 1.0f;
+	defenseMult = 0.2f * level + 1.0f;
 
-	hitPoints = hitPointsBase * hitPointsMult;
 	damage = damageBase * damageMult;
 	defense = defenseBase * defenseMult;
 
-	rewardExp = 1;
+	hitPointsMax = hitPointsBase * hitPointsMult;
+	hitDamageMax = damageBase * damageMult;
+	hitDefenseMax = defenseBase * defenseMult;
+
+	rewardExp = 1 + level / 5;
 }
 
-void EnemyB::attack(Creature& c)
+void Enemy::heal(int amount)
 {
-	c.hitPoints = c.hitPoints - damage;
-	return;
-}
+	int value = hitPoints + amount;
 
+	if (value >= hitPointsMax)
+		hitPoints = hitPointsMax;
+	else
+		hitPoints = hitPoints + amount;
+}
 
 } // end TextGame
 
