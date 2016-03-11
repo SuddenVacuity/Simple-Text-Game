@@ -52,10 +52,10 @@ running = true;
 
 while(running)
 {
-bool runOnce = true;
 TextGame::Mobile player; //declare player
 TextGame::Mobile *ptrPlayer; // declare a pointer
 ptrPlayer = &player; // assign address to pointer
+
 player.loc_Row = 10;
 player.loc_Col = 4;
 
@@ -111,32 +111,36 @@ std::cout << "[Opening Text Here]\n\n\n";
 		int** tempData = room->returnData();
 		int* tempSize = room->returnSize();
 
-		// create area to move in and return 16x16 map for the map
+		// create area to move in and return 16x16 array for the map
 		int** tempNav = TextGame::getNavData(tempLoc, tempData, tempSize);
-		std::cout << "I'll leave the door open since the main game doesn't have features added.\n";
-		std::cout << "\n\nNow trying genMap\n";
-							// Map.cpp
-		std::cout << "\n";  TextGame::genMap(0, tempNav, tempSize); std::cout << room->returnString(1);
-		std::cout << "\n";  TextGame::genMap(1, tempNav, tempSize); std::cout << room->returnString(3);
-		std::cout << "\n";  TextGame::genMap(2, tempNav, tempSize); std::cout << room->returnString(4);
-		std::cout << "\n";  TextGame::genMap(3, tempNav, tempSize); 
-		std::cout << "\n";  TextGame::genMap(4, tempNav, tempSize);
-		std::cout << "\n";  TextGame::genMap(5, tempNav, tempSize); std::cout << "Name: " << player.name;
-		std::cout << "\n";  TextGame::genMap(6, tempNav, tempSize); std::cout << "Level: " << player.level;
-		std::cout << "\n";  TextGame::genMap(7, tempNav, tempSize); std::cout << "HP: " << player.hitPoints << "/" << player.hitPointsMax;
-		std::cout << "\n";  TextGame::genMap(8, tempNav, tempSize); std::cout << "enter W A S D to move";
-		std::cout << "\n";  TextGame::genMap(9, tempNav, tempSize);
-		std::cout << "\n"; TextGame::genMap(10, tempNav, tempSize); std::cout << "1. set starting level";
-		std::cout << "\n"; TextGame::genMap(11, tempNav, tempSize); std::cout << "2. test battle function";
-		std::cout << "\n"; TextGame::genMap(12, tempNav, tempSize); std::cout << "3. battle monster";
-		std::cout << "\n"; TextGame::genMap(13, tempNav, tempSize); std::cout << "4. test room creation";
-		std::cout << "\n"; TextGame::genMap(14, tempNav, tempSize); std::cout << "5. Toggle monster encounters";
-		std::cout << "\n"; TextGame::genMap(15, tempNav, tempSize); std::cout << "99. Exit to main game(nothing here)";
 
+		//delete new arrays
 		TextGame::clearData2D(tempData, tempSize[0]);
-		TextGame::clearData2D(tempNav, 16);
 		TextGame::clearData1D(tempSize);
 		TextGame::clearData1D(tempLoc);
+
+		std::cout << "I'll leave the test room open since the main game doesn't have features added.\n";
+		std::cout << "\n\nNow trying genMap\n";
+							// Map.cpp
+		std::cout << "\n";  TextGame::genMap(0, tempNav); std::cout << room->returnString(1);
+		std::cout << "\n";  TextGame::genMap(1, tempNav); std::cout << room->returnString(3);
+		std::cout << "\n";  TextGame::genMap(2, tempNav); std::cout << room->returnString(4);
+		std::cout << "\n";  TextGame::genMap(3, tempNav); 
+		std::cout << "\n";  TextGame::genMap(4, tempNav);
+		std::cout << "\n";  TextGame::genMap(5, tempNav); std::cout << "Name: " << player.name;
+		std::cout << "\n";  TextGame::genMap(6, tempNav); std::cout << "Level: " << player.level;
+		std::cout << "\n";  TextGame::genMap(7, tempNav); std::cout << "HP: " << player.hitPoints << "/" << player.hitPointsMax;
+		std::cout << "\n";  TextGame::genMap(8, tempNav); std::cout << "enter W A S D to move";
+		std::cout << "\n";  TextGame::genMap(9, tempNav);
+		std::cout << "\n"; TextGame::genMap(10, tempNav); std::cout << "1. set starting level";
+		std::cout << "\n"; TextGame::genMap(11, tempNav); std::cout << "2. test battle function";
+		std::cout << "\n"; TextGame::genMap(12, tempNav); std::cout << "3. battle monster";
+		std::cout << "\n"; TextGame::genMap(13, tempNav); std::cout << "4. test room creation";
+		std::cout << "\n"; TextGame::genMap(14, tempNav); std::cout << "5. Toggle monster encounters";
+		std::cout << "\n"; TextGame::genMap(15, tempNav); std::cout << "99. Exit to main game(nothing here)";
+
+		TextGame::clearData2D(tempNav, 16);
+
 		std::string choice = TextGame::getInput(); // Interface.cpp
 
 		std::cout << "\n\n\n\n\n";

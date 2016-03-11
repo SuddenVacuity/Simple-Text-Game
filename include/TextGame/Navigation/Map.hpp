@@ -8,7 +8,7 @@
 namespace TextGame
 {
 
-	void genMap(int line, int** data, int* size);
+	void genMap(int line, int** data);
 
 } // end TextGame
 

@@ -104,19 +104,19 @@ namespace TextGame
 					isBattling = false;
 				}
 
-				std::cout << "\n\n" << enemy.name << " is attacking!.\n";
 
 				// check if enemy is still alive to attack
 				if (enemy.hitPoints > 0)
 				{
+				std::cout << "\n\n" << enemy.name << " is attacking!.\n";
 					// make sure hit points don't go under 0
 					if (ptrPlayer->hitPoints < enemy.damage)
 						ptrPlayer->hitPoints = 0;
 					else
-					{
 						mobileAttack(ptrMobile, ptrPlayer); // Combat.cpp
-						std::cout << "You took " << enemy.damage << " damage.";
-					}
+
+					std::cout << "You took " << enemy.damage << " damage.";
+					
 				}
 
 				// lose
@@ -135,6 +135,7 @@ namespace TextGame
 						isCharNamed = false;
 						isBattling = false;
 
+						ptrPlayer->heal(ptrPlayer->hitPointsMax);
 						clearScreen(); // Interface.cpp
 					}
 					// exit
