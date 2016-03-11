@@ -7,8 +7,8 @@ A simple text game: walk around in an open space with random encounters.
 
 TODO:
 x	clean up combat and interface
-	clean up more
-	move combat to its own files
+x	clean up more
+x	move combat to its own files
 	create method of moving around
 	create area to move around in
 	make encounters random
@@ -19,8 +19,11 @@ FILE MAP
 =================
 Types.hpp >> Globals.hpp >> start all file lines with these
 
-				   Interface.hpp >> Combat.hpp >> main
-CreatureInfo.hpp >> Creature.hpp >> Combat.hpp >> main
+				   Interface.hpp >> Combat.hpp
+CreatureInfo.hpp >> Creature.hpp >> Combat.hpp >> Navigation.hpp >> main
+									   Map.hpp >> Navigation.hpp
+									 Rooms.hpp >> Navigation.hpp
+		 Objects.hpp >> Items.hpp >> Rooms.hpp
 
 
 
@@ -31,37 +34,35 @@ CreatureInfo.hpp >> Creature.hpp >> Combat.hpp >> main
 
 //#include <TextGame/Interface.hpp> // included in Combat.hpp
 //#include <TextGame/Creature.hpp> // included in Combat.hpp
-#include <TextGame/Combat.hpp>
-//#include <TextGame/Navigation.hpp>
+//#include <TextGame/Combat.hpp>
+#include <TextGame/Navigation/Navigation.hpp>
 
 #include <iostream>
-#include <sstream>
 
 int main (int argc, char* argv)
 {
 // initialize globals - once per run
-testingRoom = false; // Globals.hpp
+testingRoom = true; // Globals.hpp
 isCharNamed = false;
 isBattling = false;
 running = true;
 
 while(running)
 {
-TextGame::Player player; //declare player
-TextGame::Player *ptrPlayer; // declare a pointer
+TextGame::Mobile player; //declare player
+TextGame::Mobile *ptrPlayer; // declare a pointer
 ptrPlayer = &player; // assign address to pointer
 
+TextGame::testRoom * room = new TextGame::testRoom; // declare raw room pointer
+
+TextGame::clearScreen(); // Interface.cpp
 std::cout << "[Opening Text Here]\n\n\n";
-std::string input; // used by getline()
 
 	while (isCharNamed == false) // character naming
 	{
 		std::cout << "Enter your characters name.\n";
 
-		// recieve input from getline() for name
-		std::getline(std::cin, input);
-		std::string playerName = input;
-		std::cin.clear();
+		std::string playerName = TextGame::getInput(); // Interface.cpp
 
 		std::cout << "\n\n\n";
 
@@ -74,83 +75,78 @@ std::string input; // used by getline()
 		std::cout << "1. yes 2. no>\n";
 
 		// recive input from cin for choices
-		// FIXME make function getInput()
-		std::getline(std::cin, input);
-		std::string choice = input;
-		std::cin.clear();
+		std::string choice = TextGame::getInput(); //Interface.cpp
 
-		if(choice == "1" || choice == "Yes" || choice == "yes" || choice == "Y" || choice == "y")
+		if(choice == "1" || choice == "Yes" || choice == "yes" || choice == "Y" || choice == "y" || choice == "\0")
 		{
-			std::cout << "\n\n\nGame Started\n";
+			TextGame::clearScreen(); // Interface.cpp
 			player.name = playerName;
 			isCharNamed = true;
 		}
 		else if (choice == "2" || choice == "No" || choice == "no" || choice == "N" || choice == "n")
-			std::cout << "\n";
+			TextGame::clearScreen(); // Interface.cpp
 		else
+		{
+			TextGame::clearScreen(); // Interface.cpp
 			std::cout << "\nInvalid input.\n\n\n";
+		}
 		} // end character naming
 
 	while (testingRoom == true)
 	{
-		std::cout << "Welcome to the testing room\n";
-		std::cout << "A few debugging and testing features will be put in here.\n\n\n";
 
-		std::cout << "Name: " << player.name << "\nHP: " << player.hitPoints << "/" << player.hitPointsMax << "\n\n\n";
+		// moved to init area
+		//TextGame::testRoom * room = new TextGame::testRoom;
 
-		std::cout << "1. set starting level\n";
-		std::cout << "2. test battle function\n";
-		std::cout << "4. spawn monster\n";
-		std::cout << "\n";
-		std::cout << "\n";
-		std::cout << "99. Exit to main game\n";
+		player.heal(player.hitPointsMax);
 
+		// need to make temp variables to clear or there's a memory leak
+		int* tempSize = room->returnSize();
+		int** tempData = room->returnData();
 
-		std::getline(std::cin, input);
-		std::string choice = input;
-		std::cin.clear();
+		std::cout << "\n\noutside returnsize size[0], size[1]: " << tempSize[0] << ", " << tempSize[1];
+		std::cout << "\n\noutside returnData data [0][0], [1][1]: " << tempData[0][0] << ", " <<  tempData[1][1];
 
-		std::cout << "\n\n\n\n";
+		std::cout << "\n\nNow trying genMap\n";
+							// Map.cpp
+		std::cout << "\n";  TextGame::genMap(0, tempData, tempSize); std::cout << room->returnString(1);
+		std::cout << "\n";  TextGame::genMap(1, tempData, tempSize); std::cout << room->returnString(3);
+		std::cout << "\n";  TextGame::genMap(2, tempData, tempSize);
+		std::cout << "\n";  TextGame::genMap(3, tempData, tempSize);
+		std::cout << "\n";  TextGame::genMap(4, tempData, tempSize);
+		std::cout << "\n";  TextGame::genMap(5, tempData, tempSize);  std::cout << "Name: " << player.name;
+		std::cout << "\n";  TextGame::genMap(6, tempData, tempSize);  std::cout << "Level: " << player.level;
+		std::cout << "\n";  TextGame::genMap(7, tempData, tempSize);  std::cout << "HP: " << player.hitPoints << "/" << player.hitPointsMax;
+		std::cout << "\n";  TextGame::genMap(8, tempData, tempSize);
+		std::cout << "\n";  TextGame::genMap(9, tempData, tempSize);
+		std::cout << "\n"; TextGame::genMap(10, tempData, tempSize); std::cout << "1. set starting level";
+		std::cout << "\n"; TextGame::genMap(11, tempData, tempSize); std::cout << "2. test battle function";
+		std::cout << "\n"; TextGame::genMap(12, tempData, tempSize); std::cout << "3. spawn monster";
+		std::cout << "\n"; TextGame::genMap(13, tempData, tempSize); std::cout << "4. test room creation";
+		std::cout << "\n"; TextGame::genMap(14, tempData, tempSize);
+		std::cout << "\n"; TextGame::genMap(15, tempData, tempSize); std::cout << "99. Exit to main game";
+
+		room->clearData(tempData, tempSize[0], tempSize);
+		std::string choice = TextGame::getInput(); // Interface.cpp
+
+		std::cout << "\n\n\n\n\n";
 
 		//set playerlevel
 		if(choice == "1")
 		{
 			std::cout << "Enter level to start.\n\n";
 
-			//FIXME
-			//trying out string stream
-			std::stringstream ss;
-
-			ss.clear();
-			ss.str("");
-
-			std::string ssinput = "";
-
-			int n;
-
-			while (true) {
-				if (!std::getline(std::cin, ssinput))
-					return -1;
-
-				ss.str(ssinput);
-
-				if (ss >> n)
-					break;
-
-				std::cout << "Invalid number, please try again" << std::endl;
-
-				ss.clear();
-				ss.str("");
-				ssinput.clear();
-			}
+			int level = TextGame::getNumber(); // Interface.cpp
 		 
-			if(n <= 1)
+			if(level <= 1)
 				player.getExp(0); // Creature.cpp
 			else
-				player.getExp((n - 1) * 2);
+				player.getExp((level - 1) * 2);
 
 			player.update();
 			player.heal(player.hitPointsMax); // Creature.cpp
+
+			TextGame::clearScreen(); // Interface.cpp
 
 		}
 
@@ -161,12 +157,14 @@ std::string input; // used by getline()
 		}
 
 		// battle monsterB
-		else if (choice == "4")
+		else if (choice == "3")
 		{
+			TextGame::clearScreen(); // Interface.cpp
+			TextGame::Mobile enemy;
+			TextGame::Mobile *ptrMobile; // declare a pointer
+			ptrMobile = &enemy; // assign address to pointer
 
-			TextGame::Enemy enemy(28, "Test Monster");
-			TextGame::Enemy *ptrEnemy; // declare a pointer
-			ptrEnemy = &enemy; // assign address to pointer
+			TextGame::customMobile(ptrMobile); // Combat.cpp
 
 			std::cout << "A wild " << enemy.name << " appeared!\n\n";
 			isBattling = true;
@@ -178,11 +176,9 @@ std::string input; // used by getline()
 				std::cout << "What will you do?\n";
 				std::cout << "1. Attack 2. Run\n\n";
 
-				std::getline(std::cin, input);
-				std::string choice = input;
-				std::cin.clear();
+				std::string choice = TextGame::getInput(); // Interface.cpp
 
-				if (choice == "1" || choice == "Attack" || choice == "attack" || choice == "A" || choice == "a")
+				if (choice == "1" || choice == "Attack" || choice == "attack" || choice == "A" || choice == "a" || choice == "\0")
 				{
 					// make sure hitPoints don't go under 0
 					if (enemy.hitPoints < player.damage)
@@ -192,13 +188,14 @@ std::string input; // used by getline()
 					}
 					else
 					{
-						TextGame::playerAttack(ptrPlayer, ptrEnemy);
+						TextGame::mobileAttack(ptrPlayer, ptrMobile);
 						std::cout << "You did " << player.damage << " damage.\n\n";
 					}
 
 					// win
 					if (enemy.hitPoints <= 0)
 					{
+						TextGame::clearScreen(); // Interface.cpp
 						std::cout << "You Win!\n";
 						player.getExp(0);
 						std::cout << "You gained " << "0" << " exp\n\n";
@@ -210,7 +207,10 @@ std::string input; // used by getline()
 					{
 						//make sure hitPoints don't go under 0
 						if (player.hitPoints < enemy.damage)
+						{
 							player.hitPoints = 0;
+							std::cout << "You took " << "0" << " damage.\n\n\n";
+						}
 						else
 						{
 							std::cout << enemy.name << " is attacking!.\n";
@@ -224,19 +224,17 @@ std::string input; // used by getline()
 						std::cout << "You died.\nHow did you do it?\n\n";
 						std::cout << "1. Restart 2. Exit\n\n";
 
-						std::getline(std::cin, input);
-						std::string choice = input;
-						std::cin.clear();
+						std::string choice = TextGame::getInput(); // Interface.cpp
 
 						// Restart
-						if (choice == "1" || choice == "Restart" || choice == "restart" || choice == "R" || choice == "r")
-						{
-							std::cout << "\n\n\n\n>>>>>>>>>>>>>>>>>>>>  RESTART >>>>>>>>>>>>>>>>>>>>\n\n\n\n\n\n\n\n\n\n";
+						if (choice == "1" || choice == "Restart" || choice == "restart" || choice == "R" || choice == "r" || choice == "\0")
+						{;
 							// FIXME goBack()
 							//TextGame::goBack(); // Interface.cpp
 							isPlaying = false;
 							isCharNamed = false;
 							isBattling = false;
+							TextGame::clearScreen(); // Interface.cpp
 						}
 						// Exit
 						else if (choice == "2" || choice == "Quit" || choice == "quit" || choice == "Q" || choice == "q")
@@ -249,7 +247,10 @@ std::string input; // used by getline()
 							running = false;
 						}
 						else
+						{
+							TextGame::clearScreen(); // Interface.cpp
 							std::cout << "Invaid input.\n\n";
+						}
 
 					}
 
@@ -258,6 +259,7 @@ std::string input; // used by getline()
 				//run
 				else if (choice == "2" || choice == "Run" || choice == "run" || choice == "R" || choice == "r")
 				{
+					TextGame::clearScreen(); // Interface.cpp
 					std::cout << "You ran away.\n\n\n";
 					isBattling = false;
 				}
@@ -266,11 +268,34 @@ std::string input; // used by getline()
 			} // end is battling
 		}
 
+		else if (choice == "4")
+		{
+			if (testRoomBool == false)
+			{
+				delete room;
+				TextGame::testRoom2 * room = new TextGame::testRoom2;
+
+				testRoomBool = true;
+			}
+			else if (testRoomBool == true)
+			{
+				delete room;
+				TextGame::testRoom * room = new TextGame::testRoom;
+
+				testRoomBool = false;
+			}
+			else
+				std::cout << "\nFailed Somehow!\n";
+		}
+
 		else if(choice == "99")
 			testingRoom = false;
 		else
+		{
+			TextGame::clearScreen(); // Interface.cpp
 			std::cout << "Invaid input.\n\n";
-	}
+		}
+	} // end Testing Room
 	
 isPlaying = true; // Globals.hpp
 	while (isPlaying)
@@ -280,27 +305,26 @@ isPlaying = true; // Globals.hpp
 
 		isBattling = false; // Globals.hpp
 
-		std::cout << "==================================\n";
-		std::cout << "Reach level 15 to win.\n";
-		std::cout << "level " << player.level << "/15\n\n";
-		std::cout << "Enter a number to make a choice.\n";
+		TextGame::clearScreen(); // Interface.cpp
+		std::cout << "\n==================================";
+		std::cout << "\nReach level 15 to win.";
+		std::cout << "\nlevel " << player.level << "/15";
+		std::cout << "\n\nEnter a number to make a choice.";
 
 
-		std::cout << "1. Battle\n2. Check\n3. Heal\n\n";
+		std::cout << "\n1. Battle\n2. Check\n3. Heal";
 
 		if (player.level >= 15)
-			std::cout << "8. Win\n";
+			std::cout << "\n8. Win\n";
 
-		std::cout << "9. Restart 10. Quit\n";
+		std::cout << "\n\n9. Restart 10. Quit";
 
-		std::getline(std::cin, input);
-		std::string choice = input;
-		std::cin.clear();
+		std::string choice = TextGame::getInput(); // Interface.cpp
 
-		std::cout << "\n\n\n\n";
+		std::cout << "\n\n\n\n\n";
 		
 		// battle monster
-		if (choice == "1" || choice == "Battle" || choice == "battle" || choice == "B" || choice == "b")
+		if (choice == "1" || choice == "Battle" || choice == "battle" || choice == "B" || choice == "b" || choice == "\0")
 		{
 			TextGame:startBattle(ptrPlayer); // Combat.cpp
 		}
@@ -308,21 +332,26 @@ isPlaying = true; // Globals.hpp
 		// check character
 		else if(choice == "2" || choice == "Check" || choice == "check" || choice == "C" || choice == "c")
 		{
-			std::cout <<"==================================\n";
-			std::cout << "Character Information:\n\n";
-			std::cout << "Name: " << player.name << "\n";
-			std::cout << "Level: " << player.level << "\n";
-			std::cout << "EXP: " << player.exp << "\n\n";
-			std::cout << "Hit Points: " << player.hitPoints << "\n";
-			std::cout << "Damage: " << player.damage << "\n";
-			std::cout << "Defense: " << player.defense << "<-- Does nothing atm.\n\n\n";
+			TextGame::clearScreen(); // Interface.cpp
+			std::cout <<"\n==================================\n";
+			std::cout << "\nCharacter Information:\n\n";
+			std::cout << "\n\nName: " << player.name;
+			std::cout << "\nLevel: " << player.level;
+			std::cout << "\nEXP: " << player.exp;
+			std::cout << "\n\nHit Points: " << player.hitPoints;
+			std::cout << "\nDamage: " << player.damage;
+			std::cout << "\nDefense: " << player.defense << "<-- Does nothing atm.";
+
+			std::cout << "\n\n\n";
 		}
 
 		//rest
 		else if (choice == "3" || choice == "Heal" || choice == "heal" || choice == "H" || choice == "h")
 		{
 			player.heal(player.hitPointsMax); // Creature.cpp
-			std::cout << "You feel rested and ready for battle.\n\n\n";
+			std::cout << "You feel rested and ready for battle.";
+
+			std::cout << "\n\n\n";
 		}
 		
 		// check if win
@@ -330,16 +359,14 @@ isPlaying = true; // Globals.hpp
 		{
 			if (player.level >= 15)
 			{
-				std::cout << "You Won!\nThanks for playing!\n\n";
-				std::cout << "1. Restart 2. Exit\n\n";
+				std::cout << "You Won!\nThanks for playing!";
+				std::cout << "\n\n1. Restart 2. Exit";
 
-				std::getline(std::cin, input);
-				std::string choice = input;
-				std::cin.clear();
+				std::string choice = TextGame::getInput(); // Interface.cpp
 
-				if (choice == "1" || choice == "Restart" || choice == "restart" || choice == "R" || choice == "r")
+				if (choice == "1" || choice == "Restart" || choice == "restart" || choice == "R" || choice == "r" || choice == "\0")
 				{
-					std::cout << "\n\n\n\n>>>>>>>>>>>>>>>>>>>>  RESTART >>>>>>>>>>>>>>>>>>>>\n\n\n\n\n\n\n\n\n\n";
+					TextGame::clearScreen(); // Interface.cpp
 					isPlaying = false;
 					isCharNamed = false;
 					isBattling = false;
@@ -366,7 +393,10 @@ isPlaying = true; // Globals.hpp
 		//restart
 		else if (choice == "9" || choice == "Restart" || choice == "restart")
 		{
-			std::cout << "\n\n\n\n>>>>>>>>>>>>>>>>>>>>  RESTART >>>>>>>>>>>>>>>>>>>>\n\n\n\n\n\n\n\n\n\n";
+			TextGame::clearScreen(); // Interface.cpp
+			isPlaying = false;
+			isCharNamed = false;
+			isBattling = false;
 			// FIXME goBack()
 			//TextGame::goBack(); // Interface.cpp
 		}
@@ -387,6 +417,7 @@ isPlaying = true; // Globals.hpp
 		{
 			testingRoom = true;
 			isPlaying = false;
+			TextGame::clearScreen(); // Interface.cpp
 		}
 
 		else

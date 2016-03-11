@@ -12,11 +12,11 @@
 
 namespace TextGame
 {
-	void playerAttack(Player *attacker, Enemy *target);
-	void enemyAttack(Enemy *attacker, Player *target);
+	void mobileAttack(Mobile *attacker, Mobile *target);
 
-	void startBattle(Player *ptrPlayer);
+	void startBattle(Mobile *ptrPlayer);
 
+	void customMobile(Mobile *ptrMobile);
 } // end TextGame
 
 #endif

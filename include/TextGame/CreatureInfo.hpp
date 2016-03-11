@@ -7,7 +7,6 @@
 //	  ==========================================================================================
 
 #include <TextGame/Globals.hpp>
-#include <string>
 #include <cmath>
 
 namespace TextGame
@@ -18,26 +17,33 @@ namespace TextGame
 	public:
 		std::string name;
 		std::string namef;
-		u32 exp;
-		f32 level;
+		int exp;
+		int level;
 
-		u32 hitPointsBase;
-		u32 damageBase;
-		u32 defenseBase;
+		int levelCap;
+		int hitPointsCap;
+		int damageCap;
+		int defenseCap;
 
-		f32 hitPointsMult;
-		f32 damageMult;
-		f32 defenseMult;
+		int hitPointsBase;
+		int damageBase;
+		int defenseBase;
 
-		u32 hitPoints;
-		u32 damage;
-		u32 defense;
+		float hitPointsMult;
+		float damageMult;
+		float defenseMult;
 
-		u32 hitPointsMax;
-		u32 hitDamageMax;
-		u32 hitDefenseMax;
+		int hitPoints;
+		int damage;
+		int defense;
 
-		u32 rewardExp;
+		int hitPointsMax;
+		int damageMax;
+		int defenseMax;
+
+		int rewardExp;
+
+
 	};
 
 } // end TextGame

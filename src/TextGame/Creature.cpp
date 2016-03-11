@@ -9,56 +9,69 @@
 namespace TextGame
 {
 // TODO: better formulas
-TextGame::Player::Player()
+TextGame::Mobile::Mobile()
 {
 	name = "Fighter";
 	namef = "Fighter";
 	exp = 0;
 	level = 1 + exp / 2;
 
+	levelCap = 999;
+	hitPointsCap = 10000;
+	damageCap = 2000;
+	defenseCap = 1000;
+
 	hitPointsBase = 50;
 	damageBase = 10;
 	defenseBase = 5;
 
-	hitPointsMult = 0.2f * level + 1.0f;
-	damageMult = 0.2f * level + 1.0f;
-	defenseMult = 0.2f * level + 1.0f;
+	hitPointsMult = 1.0f + 0.2f * level;
+	damageMult = 1.0f + 0.2f * level;
+	defenseMult = 1.0f + 0.2f * level;
 
 	hitPoints = hitPointsBase * hitPointsMult;
 	damage = damageBase * damageMult;
 	defense = defenseBase * defenseMult;
 
 	hitPointsMax = hitPointsBase * hitPointsMult;
-	hitDamageMax = damageBase * damageMult;
-	hitDefenseMax = defenseBase * defenseMult;
+	damageMax = damageBase * damageMult;
+	defenseMax = defenseBase * defenseMult;
 }
-TextGame::Player::Player(std::string playerName)
+TextGame::Mobile::Mobile(std::string playerName)
 {
 	name = playerName;
 	exp = 0;
 	level = 1 + exp / 2;
 
+	levelCap = 999;
+	hitPointsCap = 10000;
+	damageCap = 2000;
+	defenseCap = 1000;
+
 	hitPointsBase = 50;
 	damageBase = 10;
 	defenseBase = 5;
 
-	hitPointsMult = 0.2f * level + 1.0f;
-	damageMult = 0.2f * level + 1.0f;
-	defenseMult = 0.2f * level + 1.0f;
+	hitPointsMult = 1.0f + 0.2f * level;
+	damageMult = 1.0f + 0.2f * level;
+	defenseMult = 1.0f + 0.2f * level;
 
 	hitPoints = hitPointsBase * hitPointsMult;
 	damage = damageBase * damageMult;
 	defense = defenseBase * defenseMult;
 
 	hitPointsMax = hitPointsBase * hitPointsMult;
-	hitDamageMax = damageBase * damageMult;
-	hitDefenseMax = defenseBase * defenseMult;
+	damageMax = damageBase * damageMult;
+	defenseMax = defenseBase * defenseMult;
 }
 
 // update level and stats to match exp amount
-void Player::update()
+void Mobile::update()
 {
 	level = 1 + exp / 2;
+
+	if (level > levelCap)
+		level = levelCap;
 
 	hitPointsMult = 0.2f * level + 1.0f;
 	damageMult = 0.2f * level + 1.0f;
@@ -68,11 +81,27 @@ void Player::update()
 	defense = defenseBase * defenseMult;
 
 	hitPointsMax = hitPointsBase * hitPointsMult;
-	hitDamageMax = damageBase * damageMult;
-	hitDefenseMax = defenseBase * defenseMult;
+	damageMax = damageBase * damageMult;
+	defenseMax = defenseBase * defenseMult;
+
+	if (hitPointsMax > hitPointsCap)
+	{
+		hitPointsMax = hitPointsCap;
+	}
+	if (damage > damageCap)
+	{
+		damage = damageCap;
+		damageMax = damageCap;
+	}
+	if (defense > defenseCap)
+	{
+		defense = defenseCap;
+		defenseMax = defenseCap;
+	}
+
 }
 
-void Player::heal(int amount)
+void Mobile::heal(int amount)
 {
 	int value = hitPoints + amount;
 
@@ -82,69 +111,18 @@ void Player::heal(int amount)
 		hitPoints = hitPoints + amount;
 }
 
-void Player::getExp(int amount)
+void Mobile::getExp(int amount)
 {
 	exp = exp + amount;
 }
 
-// =========================================================================
-// =========================================================================
-// =========================================================================
+//====================================================
+//=============FOR NON PLAYER ONLY====================
+//====================================================
 
-// offensive enemy that dies easily
-TextGame::Enemy::Enemy()
-{
-	name = "Generic Monster";
-	namef = "Generic Monster";
-	exp = 0;
-	level = 1 + std::sqrt(exp);
-
-	hitPointsBase = 30;
-	damageBase = 15;
-	defenseBase = 3;
-
-	hitPointsMult = 0.2f * level + 1.0f;
-	damageMult = 0.25f * level + 1.0f;
-	defenseMult = 0.15f * level + 1.0f;
-
-	hitPoints = hitPointsBase * hitPointsMult;
-	damage = damageBase * damageMult;
-	defense = defenseBase * defenseMult;
-
-	hitPointsMax = hitPointsBase * hitPointsMult;
-	hitDamageMax = damageBase * damageMult;
-	hitDefenseMax = defenseBase * defenseMult;
-
-	rewardExp = 1;
-}
-TextGame::Enemy::Enemy(int mExp, std::string mName)
-{
-	name = mName;
-	namef = "TODO";
-	exp = mExp;
-	level = 1 + exp / 2;
-
-	hitPointsBase = 30;
-	damageBase = 15;
-	defenseBase = 3;
-
-	hitPointsMult = 0.2f * level + 1.0f;
-	damageMult = 0.25f * level + 1.0f;
-	defenseMult = 0.15f * level + 1.0f;
-
-	hitPoints = hitPointsBase * hitPointsMult;
-	damage = damageBase * damageMult;
-	defense = defenseBase * defenseMult;
-
-	hitPointsMax = hitPointsBase * hitPointsMult;
-	hitDamageMax = damageBase * damageMult;
-	hitDefenseMax = defenseBase * defenseMult;
-
-	rewardExp = 1 + level / 5;
-}
 
 // create custom enemy
-void Enemy::setEnemy(std::string mName, int mExp, int mHitPointsBase, int mDamageBase, int mDefenseBase, float mHitPointsMult, float mDamageMult, float mDefenseMult)
+void Mobile::setMobile(std::string mName, int mExp, int mHitPointsBase, int mDamageBase, int mDefenseBase, float mHitPointsMult, float mDamageMult, float mDefenseMult)
 {
 	name = mName;
 	namef = "TODO";
@@ -164,40 +142,13 @@ void Enemy::setEnemy(std::string mName, int mExp, int mHitPointsBase, int mDamag
 	defense = defenseBase * defenseMult;
 
 	hitPointsMax = hitPointsBase * hitPointsMult;
-	hitDamageMax = damageBase * damageMult;
-	hitDefenseMax = defenseBase * defenseMult;
+	damageMax = damageBase * damageMult;
+	defenseMax = defenseBase * defenseMult;
 
 	rewardExp = 1 + level / 5;
 }
 
-// update level and stats to match exp amount
-void Enemy::update()
-{
-	level = 1 + exp / 2;
 
-	hitPointsMult = 0.2f * level + 1.0f;
-	damageMult = 0.2f * level + 1.0f;
-	defenseMult = 0.2f * level + 1.0f;
-
-	damage = damageBase * damageMult;
-	defense = defenseBase * defenseMult;
-
-	hitPointsMax = hitPointsBase * hitPointsMult;
-	hitDamageMax = damageBase * damageMult;
-	hitDefenseMax = defenseBase * defenseMult;
-
-	rewardExp = 1 + level / 5;
-}
-
-void Enemy::heal(int amount)
-{
-	int value = hitPoints + amount;
-
-	if (value >= hitPointsMax)
-		hitPoints = hitPointsMax;
-	else
-		hitPoints = hitPoints + amount;
-}
 
 } // end TextGame
 

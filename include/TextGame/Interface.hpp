@@ -3,12 +3,18 @@
 
 #include <TextGame/Globals.hpp>
 #include <iostream>
-#include <string>
+#include <sstream>
 
 namespace TextGame
 {
-	// go back to start of running loop
-	void goBack();
+
+	std::string getInput(); // get input
+	int getNumber(); // get input
+
+	void clearScreen();
+
+	void goBack(); // go back to start of running loop
+
 
 
 
