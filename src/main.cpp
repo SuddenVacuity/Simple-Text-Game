@@ -9,9 +9,12 @@ TODO:
 x	clean up combat and interface
 x	clean up more
 x	move combat to its own files
-	create method of moving around
-	create area to move around in
-	make encounters random
+x	create method of moving around
+x	create area to move around in
+	add collision
+x	make encounters random
+	make array of monster info
+	make function to handle encounters
 	add goal
 
 =================
@@ -34,7 +37,7 @@ CreatureInfo.hpp >> Creature.hpp >> Combat.hpp >> Navigation.hpp >> main
 
 //#include <TextGame/Interface.hpp> // included in Combat.hpp
 //#include <TextGame/Creature.hpp> // included in Combat.hpp
-//#include <TextGame/Combat.hpp>
+//#include <TextGame/Combat.hpp> // included in Navigation.hpp
 #include <TextGame/Navigation/Navigation.hpp>
 
 #include <iostream>
@@ -49,9 +52,12 @@ running = true;
 
 while(running)
 {
+bool runOnce = true;
 TextGame::Mobile player; //declare player
 TextGame::Mobile *ptrPlayer; // declare a pointer
 ptrPlayer = &player; // assign address to pointer
+player.loc_Row = 10;
+player.loc_Col = 4;
 
 TextGame::testRoom * room = new TextGame::testRoom; // declare raw room pointer
 
@@ -94,39 +100,43 @@ std::cout << "[Opening Text Here]\n\n\n";
 
 	while (testingRoom == true)
 	{
-
 		// moved to init area
 		//TextGame::testRoom * room = new TextGame::testRoom;
 
 		player.heal(player.hitPointsMax);
 
 		// need to make temp variables to clear or there's a memory leak
-		int* tempSize = room->returnSize();
+
+		int* tempLoc = player.getLocation();
 		int** tempData = room->returnData();
+		int* tempSize = room->returnSize();
 
-		std::cout << "\n\noutside returnsize size[0], size[1]: " << tempSize[0] << ", " << tempSize[1];
-		std::cout << "\n\noutside returnData data [0][0], [1][1]: " << tempData[0][0] << ", " <<  tempData[1][1];
-
+		// create area to move in and return 16x16 map for the map
+		int** tempNav = TextGame::getNavData(tempLoc, tempData, tempSize);
+		std::cout << "I'll leave the door open since the main game doesn't have features added.\n";
 		std::cout << "\n\nNow trying genMap\n";
 							// Map.cpp
-		std::cout << "\n";  TextGame::genMap(0, tempData, tempSize); std::cout << room->returnString(1);
-		std::cout << "\n";  TextGame::genMap(1, tempData, tempSize); std::cout << room->returnString(3);
-		std::cout << "\n";  TextGame::genMap(2, tempData, tempSize);
-		std::cout << "\n";  TextGame::genMap(3, tempData, tempSize);
-		std::cout << "\n";  TextGame::genMap(4, tempData, tempSize);
-		std::cout << "\n";  TextGame::genMap(5, tempData, tempSize);  std::cout << "Name: " << player.name;
-		std::cout << "\n";  TextGame::genMap(6, tempData, tempSize);  std::cout << "Level: " << player.level;
-		std::cout << "\n";  TextGame::genMap(7, tempData, tempSize);  std::cout << "HP: " << player.hitPoints << "/" << player.hitPointsMax;
-		std::cout << "\n";  TextGame::genMap(8, tempData, tempSize);
-		std::cout << "\n";  TextGame::genMap(9, tempData, tempSize);
-		std::cout << "\n"; TextGame::genMap(10, tempData, tempSize); std::cout << "1. set starting level";
-		std::cout << "\n"; TextGame::genMap(11, tempData, tempSize); std::cout << "2. test battle function";
-		std::cout << "\n"; TextGame::genMap(12, tempData, tempSize); std::cout << "3. spawn monster";
-		std::cout << "\n"; TextGame::genMap(13, tempData, tempSize); std::cout << "4. test room creation";
-		std::cout << "\n"; TextGame::genMap(14, tempData, tempSize);
-		std::cout << "\n"; TextGame::genMap(15, tempData, tempSize); std::cout << "99. Exit to main game";
+		std::cout << "\n";  TextGame::genMap(0, tempNav, tempSize); std::cout << room->returnString(1);
+		std::cout << "\n";  TextGame::genMap(1, tempNav, tempSize); std::cout << room->returnString(3);
+		std::cout << "\n";  TextGame::genMap(2, tempNav, tempSize); std::cout << room->returnString(4);
+		std::cout << "\n";  TextGame::genMap(3, tempNav, tempSize); 
+		std::cout << "\n";  TextGame::genMap(4, tempNav, tempSize);
+		std::cout << "\n";  TextGame::genMap(5, tempNav, tempSize); std::cout << "Name: " << player.name;
+		std::cout << "\n";  TextGame::genMap(6, tempNav, tempSize); std::cout << "Level: " << player.level;
+		std::cout << "\n";  TextGame::genMap(7, tempNav, tempSize); std::cout << "HP: " << player.hitPoints << "/" << player.hitPointsMax;
+		std::cout << "\n";  TextGame::genMap(8, tempNav, tempSize); std::cout << "enter W A S D to move";
+		std::cout << "\n";  TextGame::genMap(9, tempNav, tempSize);
+		std::cout << "\n"; TextGame::genMap(10, tempNav, tempSize); std::cout << "1. set starting level";
+		std::cout << "\n"; TextGame::genMap(11, tempNav, tempSize); std::cout << "2. test battle function";
+		std::cout << "\n"; TextGame::genMap(12, tempNav, tempSize); std::cout << "3. battle monster";
+		std::cout << "\n"; TextGame::genMap(13, tempNav, tempSize); std::cout << "4. test room creation";
+		std::cout << "\n"; TextGame::genMap(14, tempNav, tempSize); std::cout << "5. Toggle monster encounters";
+		std::cout << "\n"; TextGame::genMap(15, tempNav, tempSize); std::cout << "99. Exit to main game(nothing here)";
 
-		room->clearData(tempData, tempSize[0], tempSize);
+		TextGame::clearData2D(tempData, tempSize[0]);
+		TextGame::clearData2D(tempNav, 16);
+		TextGame::clearData1D(tempSize);
+		TextGame::clearData1D(tempLoc);
 		std::string choice = TextGame::getInput(); // Interface.cpp
 
 		std::cout << "\n\n\n\n\n";
@@ -268,6 +278,7 @@ std::cout << "[Opening Text Here]\n\n\n";
 			} // end is battling
 		}
 
+		//change rooms
 		else if (choice == "4")
 		{
 			if (testRoomBool == false)
@@ -288,6 +299,38 @@ std::cout << "[Opening Text Here]\n\n\n";
 				std::cout << "\nFailed Somehow!\n";
 		}
 
+		// toggle encounters
+		else if (choice == "5")
+		{
+			if(room->roomEncounterRate == 0)
+				room->roomEncounterRate = 10;
+			else
+				room->roomEncounterRate = 0;
+		}
+
+		//move
+		else if (choice == "w" || choice == "W" || choice == "a" || choice == "A" || choice == "s" || choice == "S" || choice == "d" || choice == "D")
+		{
+			if (choice == "w" || choice == "W")
+				player.loc_Row = player.loc_Row - 1;
+			else if (choice == "a" || choice == "A")
+				player.loc_Col = player.loc_Col - 1;
+			else if (choice == "s" || choice == "S")
+				player.loc_Row = player.loc_Row + 1;
+			else if (choice == "d" || choice == "D")
+				player.loc_Col = player.loc_Col + 1;
+			else
+				std::cout << "Invaid input.\n\n";
+
+			int rand = 0;
+			rand = std::rand() % 100;
+			if(rand < room->roomEncounterRate)
+				TextGame::startBattle(ptrPlayer);
+			//add battle type to startBattle
+			
+		}
+
+		//leave testing room
 		else if(choice == "99")
 			testingRoom = false;
 		else
@@ -297,6 +340,7 @@ std::cout << "[Opening Text Here]\n\n\n";
 		}
 	} // end Testing Room
 	
+TextGame::clearScreen(); // Interface.cpp
 isPlaying = true; // Globals.hpp
 	while (isPlaying)
 	{
@@ -305,7 +349,7 @@ isPlaying = true; // Globals.hpp
 
 		isBattling = false; // Globals.hpp
 
-		TextGame::clearScreen(); // Interface.cpp
+		//TextGame::clearScreen(); // Interface.cpp
 		std::cout << "\n==================================";
 		std::cout << "\nReach level 15 to win.";
 		std::cout << "\nlevel " << player.level << "/15";
@@ -333,8 +377,8 @@ isPlaying = true; // Globals.hpp
 		else if(choice == "2" || choice == "Check" || choice == "check" || choice == "C" || choice == "c")
 		{
 			TextGame::clearScreen(); // Interface.cpp
-			std::cout <<"\n==================================\n";
-			std::cout << "\nCharacter Information:\n\n";
+			std::cout <<"\n==================================";
+			std::cout << "\nCharacter Information:";
 			std::cout << "\n\nName: " << player.name;
 			std::cout << "\nLevel: " << player.level;
 			std::cout << "\nEXP: " << player.exp;
@@ -342,16 +386,17 @@ isPlaying = true; // Globals.hpp
 			std::cout << "\nDamage: " << player.damage;
 			std::cout << "\nDefense: " << player.defense << "<-- Does nothing atm.";
 
-			std::cout << "\n\n\n";
+			std::cout << "\n\n";
 		}
 
 		//rest
 		else if (choice == "3" || choice == "Heal" || choice == "heal" || choice == "H" || choice == "h")
 		{
+			TextGame::clearScreen(); // Interface.cpp
 			player.heal(player.hitPointsMax); // Creature.cpp
 			std::cout << "You feel rested and ready for battle.";
 
-			std::cout << "\n\n\n";
+			std::cout << "\n\n";
 		}
 		
 		// check if win

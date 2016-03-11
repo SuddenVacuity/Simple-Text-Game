@@ -23,8 +23,8 @@ namespace TextGame
 	{
 		//FIXME prevent memory leak
 		int* size = new int[2];
-		size[0] = 16;
-		size[1] = 16;
+		size[0] = roomRows;
+		size[1] = roomColumns;
 
 		return size;
 	}
@@ -41,21 +41,6 @@ namespace TextGame
 		}
 		return data;
 	}
-	void testRoom::clearData(int** data, int rows, int* size)
-	{
-		if(data)
-			for (int i = 0; i < rows; i++)
-				if(data[i])
-					delete[] data[i];
-			delete[] data;
-
-		//if (size)
-		//	for (int i = 0; i < 2; i++)
-		//		if (size[i])
-		//			delete[] size[i];
-		//delete[] size;
-
-	}
 
 
 
@@ -71,8 +56,8 @@ namespace TextGame
 	{
 		//FIXME prevent memory leak
 		int* size = new int[2];
-		size[0] = 16;
-		size[1] = 16;
+		size[0] = roomRows;
+		size[1] = roomColumns;
 
 		return size;
 	}
@@ -88,20 +73,5 @@ namespace TextGame
 				data[i][j] = roomObject[i][j];
 		}
 		return data;
-	}
-	void testRoom2::clearData(int** data, int rows, int* size)
-	{
-		if (data)
-			for (int i = 0; i < rows; i++)
-				if (data[i])
-					delete[] data[i];
-		delete[] data;
-
-		//if (size)
-		//	for (int i = 0; i < 2; i++)
-		//		if (size[i])
-		//			delete[] size[i];
-		//delete[] size;
-
 	}
 } // end TextGame

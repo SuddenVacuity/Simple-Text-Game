@@ -17,7 +17,7 @@ namespace TextGame
 {
 
 
-	int getRoomData(int *ptrRoom);
+	int** getNavData(int* mLocation, int** data, int* size);
 
 
 

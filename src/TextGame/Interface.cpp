@@ -67,7 +67,19 @@ namespace TextGame
 		std::cout << "\nisBattling is: " << isBattling << "\n";
 	}
 
-
+	void clearData1D(int* data)
+	{
+		if (data)
+			delete data;
+	}
+	void clearData2D(int** data, int rows)
+	{
+		if (data)
+			for (int i = 0; i < rows; i++)
+				if (data[i])
+					delete[] data[i];
+		delete[] data;
+	}
 
 
 

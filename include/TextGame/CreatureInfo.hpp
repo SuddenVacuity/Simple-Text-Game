@@ -19,6 +19,8 @@ namespace TextGame
 		std::string namef;
 		int exp;
 		int level;
+		int loc_Row;
+		int loc_Col;
 
 		int levelCap;
 		int hitPointsCap;

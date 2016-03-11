@@ -15,7 +15,8 @@ namespace TextGame
 
 	void goBack(); // go back to start of running loop
 
-
+	void clearData1D(int* data);
+	void clearData2D(int** data, int rows);
 
 
 } // end TextGame

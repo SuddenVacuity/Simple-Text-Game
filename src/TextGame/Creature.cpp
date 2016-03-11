@@ -15,33 +15,8 @@ TextGame::Mobile::Mobile()
 	namef = "Fighter";
 	exp = 0;
 	level = 1 + exp / 2;
-
-	levelCap = 999;
-	hitPointsCap = 10000;
-	damageCap = 2000;
-	defenseCap = 1000;
-
-	hitPointsBase = 50;
-	damageBase = 10;
-	defenseBase = 5;
-
-	hitPointsMult = 1.0f + 0.2f * level;
-	damageMult = 1.0f + 0.2f * level;
-	defenseMult = 1.0f + 0.2f * level;
-
-	hitPoints = hitPointsBase * hitPointsMult;
-	damage = damageBase * damageMult;
-	defense = defenseBase * defenseMult;
-
-	hitPointsMax = hitPointsBase * hitPointsMult;
-	damageMax = damageBase * damageMult;
-	defenseMax = defenseBase * defenseMult;
-}
-TextGame::Mobile::Mobile(std::string playerName)
-{
-	name = playerName;
-	exp = 0;
-	level = 1 + exp / 2;
+	loc_Row = 0;
+	loc_Col = 0;
 
 	levelCap = 999;
 	hitPointsCap = 10000;
@@ -114,6 +89,16 @@ void Mobile::heal(int amount)
 void Mobile::getExp(int amount)
 {
 	exp = exp + amount;
+}
+
+int* Mobile::getLocation()
+{
+	// FIXME prevent memory leak
+	int* result = new int[2];
+	result[0] = loc_Row;
+	result[1] = loc_Col;
+
+	return result;
 }
 
 //====================================================

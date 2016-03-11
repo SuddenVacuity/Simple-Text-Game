@@ -23,7 +23,7 @@ namespace TextGame
 		ptrMobile = &enemy; // assign address to pointer
 
 		bool isChoosing = true;
-		while (isChoosing == true)
+/*		while (isChoosing == true)
 		{
 			// picking monster to battle
 			std::cout << "Pick a monster to battle.";
@@ -56,6 +56,10 @@ namespace TextGame
 				std::cout << " <<- Invalid input ->>\n\n\n";
 
 		}// end isChoosing
+*/
+
+		//FIXME add overload and arrays to do this
+		enemy.setMobile("Monster", ptrPlayer->exp, 30, 15, 3, 0.2f, 0.2f, 0.2f); // Creature.cpp
 
 		// starting battle
 		clearScreen(); // Interface.cpp
@@ -94,7 +98,7 @@ namespace TextGame
 					std::cout << "\n\nYou Win!";
 					ptrPlayer->getExp(enemy.rewardExp);
 
-					std::cout << "\nYou gained " << enemy.rewardExp << " exp\n\n";
+					std::cout << "\nYou gained " << enemy.rewardExp << " exp";
 					ptrPlayer->update();
 
 					isBattling = false;

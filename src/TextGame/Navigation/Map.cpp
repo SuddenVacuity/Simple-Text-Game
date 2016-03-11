@@ -30,8 +30,12 @@ namespace TextGame
 				if (data[line][j] == 0)
 					map[line][j] = ".";
 
-				else if(data[line][j] == 1)
+				else if (data[line][j] == 1)
 					map[line][j] = "O";
+
+
+				else if (data[line][j] == 999)
+					map[line][j] = "P";
 
 				else
 					map[line][j] = "-";

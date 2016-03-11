@@ -26,17 +26,14 @@ namespace TextGame
 		//gain exp
 		void getExp(int amount);
 
+		int* Mobile::getLocation();
 
 		//====================================================
 		//=============FOR NON PLAYER ONLY====================
 		//====================================================
 
-		// spawn at higher than lv 1
-		Mobile::Mobile(int mExp, std::string mName);
-
 		// create custom enemy
 		void Mobile::setMobile(std::string mName, int mExp, int mHitPointsBase, int mDamageBase, int mDefenseBase, float mHitPointsMult, float mDamageMult, float mDefenseMult);
-
 
 	};
 
