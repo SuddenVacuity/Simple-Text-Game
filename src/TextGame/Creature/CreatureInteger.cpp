@@ -18,8 +18,8 @@ namespace TextGame
 	)
 	)
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
-	const int intVal = 26;
-	int creatureInteger[][intVal] =
+	const int creatureIntVal = 26;
+	int creatureInteger[][creatureIntVal] =
 	{	//   {      faction, dropSet, exp, rewardExp, gender
 		// /**/ startLV, minlevel, maxlevel, level,
 		// /**/ baseHP, baseSta, baseSpe baseATK, baseDEF,

@@ -13,16 +13,15 @@
 namespace TextGame
 {
 
-	int mainGame(Creature* ptrPlayer)
+	int mainGame(Creature* ptrPlayer, int& gameMode)
 	{
-		int result = 1;
-		bool isPlaying = true;
-		while (isPlaying)
+		if(gameMode != 1)
+			return gameMode;
+
+		while (gameMode == 1)
 		{
 			// update stats
 			ptrPlayer->update(); // Creature.cpp
-	
-			isBattling = false; // Globals.hpp
 	
 								//TextGame::clearScreen(); // Interface.cpp
 			std::cout << "\n==================================";
@@ -45,7 +44,7 @@ namespace TextGame
 			// battle monster
 			if (choice == "1" || choice == "Battle" || choice == "battle" || choice == "B" || choice == "b" || choice == "\0")
 			{
-			TextGame:startBattle(ptrPlayer); // Combat.cpp
+			TextGame:startBattle(ptrPlayer, gameMode); // Combat.cpp
 			}
 	
 			// check character
@@ -87,10 +86,7 @@ namespace TextGame
 					if (choice == "1" || choice == "Restart" || choice == "restart" || choice == "R" || choice == "r" || choice == "\0")
 					{
 						TextGame::clearScreen(); // Interface.cpp
-						result = 99;
-						isPlaying = false;
-						isCharNamed = false;
-						isBattling = false;
+						gameMode = 99;
 						// FIXME goBack()
 						//TextGame::goBack(); // Interface.cpp
 					}
@@ -98,11 +94,7 @@ namespace TextGame
 					{
 						// FIXME goBack()
 						//TextGame::goBack(); // Interface.cpp
-						result = 99;
-						isPlaying = false;
-						isCharNamed = false;
-						isBattling = false;
-						running = false;
+						gameMode = 100;
 					}
 					else
 						std::cout << "Invaid input.\n\n";
@@ -116,10 +108,7 @@ namespace TextGame
 			else if (choice == "9" || choice == "Restart" || choice == "restart")
 			{
 				TextGame::clearScreen(); // Interface.cpp
-				result = 99;
-				isPlaying = false;
-				isCharNamed = false;
-				isBattling = false;
+				gameMode = 99;
 				// FIXME goBack()
 				//TextGame::goBack(); // Interface.cpp
 			}
@@ -127,11 +116,7 @@ namespace TextGame
 			// quit
 			else if (choice == "10" || choice == "Quit" || choice == "quit" || choice == "Q" || choice == "q")
 			{
-				result = 100;
-				isPlaying = false;
-				isCharNamed = false;
-				isBattling = false;
-				running = false;
+				gameMode = 100;
 				// FIXME goBack()
 				//TextGame::goBack(); // Interface.cpp
 			}
@@ -140,7 +125,7 @@ namespace TextGame
 				std::cout << "Invaid input.\n\n";
 	
 		}
-		return result;
+		return gameMode;
 	}
 	
 }// end TextGame

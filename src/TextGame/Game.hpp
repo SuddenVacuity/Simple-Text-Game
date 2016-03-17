@@ -13,7 +13,7 @@
 
 namespace TextGame
 {
-	int mainGame(Creature* ptrPlayer);
+	int mainGame(Creature* ptrPlayer, int& gameMode);
 } // end TextGame
 
 #endif

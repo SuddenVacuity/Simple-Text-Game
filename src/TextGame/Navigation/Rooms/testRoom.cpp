@@ -30,10 +30,10 @@ namespace TextGame
 	)
 	)				return int;
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
-	int testRoom::returnState(int* location)
-	{
-		return roomState[location[0]][location[1]];
-	}
+	//int testRoom::returnState(int* location)
+	//{
+	//	return roomState[location[0]][location[1]];
+	//}
 	/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	)				returnData (testRoom.hpp)
 	)					creates array the size of the room and populates it with roomObject
@@ -43,19 +43,19 @@ namespace TextGame
 	)
 	)				return new int* data[]; needs to be deleted to avoid memory leak
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
-	int** testRoom::returnData() // be sure to delete
-	{
-		int** data = new int*[roomRows];
-
-		// generate table
-		for (int i = 0; i < roomRows; i++)
-		{
-			data[i] = new int[roomColumns];
-			for (int j = 0; j < roomColumns; j++)
-				data[i][j] = roomObject[i][j];
-		}
-		return data;
-	}
+	//int** testRoom::returnData() // be sure to delete
+	//{
+	//	int** data = new int*[roomRows];
+	//
+	//	// generate table
+	//	for (int i = 0; i < roomRows; i++)
+	//	{
+	//		data[i] = new int[roomColumns];
+	//		for (int j = 0; j < roomColumns; j++)
+	//			data[i][j] = roomObject[i][j];
+	//	}
+	//	return data;
+	//}
 	/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	)				returnString (testRoom.hpp)
 	)					return string from roomString

@@ -7,18 +7,19 @@ A simple text game: walk around in an open space with random encounters.
 
 TODO:
 x	clean up combat and interface
-x	clean up more
-x	move combat to its own files
-x	create method of moving around
-x	create area to move around in
-x	add collision
-x	make encounters random
-x	make array of monster info
+x	clean up more									 --. . . , , , ; ; ; ; 
+x	move combat to its own files					 --. . . , , , ; ; ; ;
+x	create method of moving around					 --t
+x	create area to move around in					 --T
+x	add collision									 --
+x	make encounters random							 --/ T T T \
+x	make array of monster info						 --[ _ O _ ] s =
 	make rooms come from a single struct
-	set gamemodes
+x	set gamemodes
 	add interaction with rooms
 	make function to handle encounters
 	add weapon/armor/skill/class
+	load creature/room/weapon/armor/skill/class info from external files
 	add goal
 
 	Always TODO: clean up
@@ -42,26 +43,29 @@ CreatureInfo.hpp >> Creature.hpp >> Combat.hpp >> Navigation.hpp >> Movement.hpp
 int main (int argc, char* argv)
 {
 // initialize globals - once per run
-bool testingRoom = true;
-isCharNamed = false;
-running = true;
 
 int gameMode = 0;
+// 0 = uninitialized
+// 1 = ready to play
+// 2 = new game
+// 98 debug
+// 99 = restart
+// 100 = quit
 
 while(gameMode != 100)
 {
-TextGame::Creature player(1, 1, 5, 5); //declare player
 TextGame::Creature *ptrPlayer; // declare a pointer
+TextGame::Creature player(1, 1, 5, 5); //declare player
 ptrPlayer = &player; // assign address to pointer
 ptrPlayer->update(); // Creature.cpp
 ptrPlayer->updateHitPoints(); // Creature.cpp
 
-// set gamemodes later
-	if (gameMode != 100)
-	TextGame::titleScreen(); // Title.cpp
 
-	if (gameMode != 100)
-	while (isCharNamed == false) // character naming
+	gameMode = TextGame::titleScreen(gameMode); // Title.cpp
+
+	gameMode = TextGame::TestingRoom(ptrPlayer, gameMode); // Test.cpp
+
+	while (gameMode == 2) // character naming
 	{
 		std::cout << "Enter your characters name.\n";
 
@@ -84,7 +88,7 @@ ptrPlayer->updateHitPoints(); // Creature.cpp
 		{
 			TextGame::clearScreen(); // Interface.cpp
 			ptrPlayer->name = playerName;
-			isCharNamed = true;
+			gameMode = 1;
 		}
 		else if (choice == "2" || choice == "No" || choice == "no" || choice == "N" || choice == "n")
 			TextGame::clearScreen(); // Interface.cpp
@@ -95,14 +99,11 @@ ptrPlayer->updateHitPoints(); // Creature.cpp
 		}
 		} // end character naming
 
-	if (gameMode != 100)
-	gameMode = TextGame::TestingRoom(ptrPlayer, gameMode); // Test.cpp
+	gameMode = TextGame::mainGame(ptrPlayer, gameMode); // Game.cpp
 
-	TextGame::clearScreen(); // Interface.cpp
+	if(gameMode == 99)
+		gameMode = 0;
 
-	if (gameMode != 100)
-	gameMode = TextGame::mainGame(ptrPlayer); // Game.cpp
-
-}// end running
+}// end game
 	return 0;
 }// end main

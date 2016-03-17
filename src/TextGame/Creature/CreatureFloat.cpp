@@ -18,8 +18,8 @@ namespace TextGame
 	)
 	)				
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
-	const int floatVal = 19;
-	float creatureFloat[][floatVal] =
+	const int creatureFloatVal = 19;
+	float creatureFloat[][creatureFloatVal] =
 	{
 		// { hpMult, staMult, speMult, dmgMult, defMult,
 		// /**/ strMult, intMult, fitMult, agiMult, wisMult, perMult, spdMult 

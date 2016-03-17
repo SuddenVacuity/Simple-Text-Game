@@ -81,6 +81,15 @@
     <ClCompile Include="src\TextGame\Navigation\Rooms\testRoom.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\TextGame\Navigation\Rooms\RoomString.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextGame\Navigation\Rooms\RoomInteger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextGame\Navigation\Rooms\TeRo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\TextGame\Creature.hpp">
@@ -438,6 +447,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\TextGame\Navigation\Rooms\testRoom.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TextGame\Navigation\Rooms\RoomInfo.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -867,7 +879,6 @@
     <None Include="external\SFML-2.3.2\bin\sfml-window-2.dll" />
     <None Include="external\SFML-2.3.2\bin\sfml-window-d-2.dll" />
     <None Include="external\SFML-2.3.2\cmake\Modules\FindSFML.cmake" />
-    <None Include="bin\Simple Text Stuff.exe" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="external\SFML-2.3.2\license.txt" />

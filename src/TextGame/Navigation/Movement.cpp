@@ -56,7 +56,7 @@ namespace TextGame
 	)							choice = input
 	)				return int; changes creature location and map updates to show
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
-	int moveCreature(Creature* ptrCreature, testRoom* room, char choice)
+	int moveCreature(Creature* ptrCreature, testRoom* room, char choice, int& gameMode)
 	{
 		int result = 1;
 		// get creature location
@@ -93,7 +93,7 @@ namespace TextGame
 		int rand = 0;
 		rand = std::rand() % 100;
 		if (rand < room->roomEncounterRate)
-			result = TextGame::startBattle(ptrCreature);
+			result = TextGame::startBattle(ptrCreature, gameMode);
 		//FIXME add battle type to startBattle
 		return result;
 	}

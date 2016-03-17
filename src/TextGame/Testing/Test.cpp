@@ -19,15 +19,14 @@ namespace TextGame
 	
 	int TestingRoom(Creature* ptrPlayer, int& gameMode)
 	{
-		if(gameMode != 0)
-			return 1;
-		int result = 0;
+		if(gameMode != 98)
+			return gameMode;
 
 		std::cout << "\nTest room entered.";
 		TextGame::testRoom * room = new TextGame::testRoom;
 	 	bool testRoomBool = false;
 		bool testingTrue = true;
-		while (testingTrue == true)
+		while (gameMode == 98)
 		{
 			// moved to init area
 			//TextGame::testRoom * room = new TextGame::testRoom;
@@ -104,9 +103,7 @@ namespace TextGame
 			// test battle function
 			else if (choice == '3')
 			{
-				result = TextGame::startBattle(ptrPlayer); // Combat.cpp
-				if(result == 99 || result == 100)
-					testingTrue = false;
+				TextGame::startBattle(ptrPlayer, gameMode); // Combat.cpp
 			}
 		
 			//change rooms
@@ -146,14 +143,12 @@ namespace TextGame
 			//move
 			else if (choice == 'w' || choice == 'W' || choice == 'a' || choice == 'A' || choice == 's' || choice == 'S' || choice == 'd' || choice == 'D')
 			{
-				result = moveCreature(ptrPlayer, room, choice);
-				if (result == 100)
-					testingTrue = false;
+				moveCreature(ptrPlayer, room, choice, gameMode);
 			}
 		
 			//leave testing room
 			else if (choice == '9')
-				testingTrue = false;
+				gameMode = 1;
 			else
 			{
 				TextGame::clearScreen(); // Interface.cpp
@@ -165,7 +160,7 @@ namespace TextGame
 	
 	delete room;
 	testingTrue = false;
-	return result;
+	return gameMode;
 	} // end Testing Room
 	
 

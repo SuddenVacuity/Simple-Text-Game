@@ -14,7 +14,7 @@
 namespace TextGame
 {
 
-	void titleScreen();
+	int titleScreen(int& gameMode);
 
 
 

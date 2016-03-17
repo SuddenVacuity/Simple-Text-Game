@@ -18,9 +18,9 @@ namespace TextGame
 	)
 	)				
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
-	const int boolVal = 15;
+	const int creatureBoolVal = 15;
 	// 
-	bool creatureBool[][boolVal] =
+	bool creatureBool[][creatureBoolVal] =
 	{
 		{}
 	};

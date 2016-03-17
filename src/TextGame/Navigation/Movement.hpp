@@ -14,7 +14,7 @@
 namespace TextGame
 {
 	int* returnDirection(Creature* ptrCreature, int choice);
-	int moveCreature(Creature* ptrCreature, testRoom* room, char choice);
+	int moveCreature(Creature* ptrCreature, testRoom* room, char choice,int& gameMode);
 } // end TextGame
 
 #endif

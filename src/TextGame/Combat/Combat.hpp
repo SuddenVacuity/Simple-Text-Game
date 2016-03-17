@@ -16,7 +16,7 @@
 namespace TextGame
 {
 	void mobileAttack(Creature* attacker, Creature* target);
-	int startBattle(Creature* ptrPlayer);
+	int startBattle(Creature* ptrPlayer, int& gameMode);
 
 } // end TextGame
 

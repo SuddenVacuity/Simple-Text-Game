@@ -21,8 +21,8 @@ namespace TextGame
 	)
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 	// seems like this has to be done outside of creature functions
-	const int stringVal = 15;
-	std::string creatureString[][stringVal] =
+	const int creatureStringVal = 15;
+	std::string creatureString[][creatureStringVal] =
 	{
 		{ "[0_null]", "$", "$", "$", "$", "[0_cname_0]", "[0_name_0]", "[0_name_1]", "[0_desc_0]", "[0_desc_2]", "[0_decs_3]", "[0_win_0]", "[0_win_1]", "[0_lose_0]", "[0_lose_1]" },
 		{ "[1_null]", "^", "<", "v", ">", "Adventurer", "Player", "[0_name_1]", "[0_desc_0]", "[0_desc_2]", "[0_decs_3]", "[0_win_0]", "[0_win_1]", "[0_lose_0]", "[0_lose_1]" },

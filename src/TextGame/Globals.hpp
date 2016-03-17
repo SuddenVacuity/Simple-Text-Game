@@ -21,10 +21,6 @@
 
 #include <TextGame/CleanUp.hpp>
 
-static bool running = true; // if false the program closes
-
-static bool isCharNamed = false; 
-static bool isBattling = false;
 
 // FIXME both map size values currently have to be even numbers
 static const int g_mapSizeCol = 10;
