@@ -1,69 +1,58 @@
-
-
-//	  ==========================================================================================
-//	  =============																================
-//	  =============																================
-//	  ==========================================================================================
-
-#include <TextGame/Combat.hpp>
-#include <iostream>
+/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+)				Combat.cpp (Combat.hpp)
+)					Main combat file
+)
+)				
+)				
+)
+)				
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
+#include <TextGame/Combat/Combat.hpp>
 
 namespace TextGame
 {
-	void mobileAttack(Mobile *attacker, Mobile *target)
+	/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	)				mobileAttack (Combat.hpp)
+	)					one Creature can attack another
+	)
+	)				(Creature* attacker, Creature* target)
+	)					must be pointer to class Creature ,attacker attacks target
+	)
+	)				return: void
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
+	void mobileAttack(Creature* attacker, Creature* target)
 	{
 		target->hitPoints = target->hitPoints - attacker->damage;
 	}
 
-	void startBattle(Mobile *ptrPlayer)
+	/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	)				startBattle (Combat.hpp) TODO: break this into smaller functions
+	)					initializes a battle
+	)
+	)				(Creature* ptrPlayer)
+	)					must be a pointer of class Creature to enter battle (will generally be player)
+	)
+	)				return int outcome; 0 = error, 1 = win, 1 = ran, 99 = restart, 100 = quit
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
+
+	int startBattle(Creature* ptrPlayer)
 	{
+		int result = 1;
 		clearScreen(); // Interface.cpp
-		TextGame::Mobile enemy;
-		TextGame::Mobile *ptrMobile; // declare a pointer
+
+		// id, level, locRow, locCol
+		TextGame::Creature enemy(2, 1, 5, 5);
+		TextGame::Creature *ptrMobile; // declare a pointer
 		ptrMobile = &enemy; // assign address to pointer
-
-		bool isChoosing = true;
-/*		while (isChoosing == true)
-		{
-			// picking monster to battle
-			std::cout << "Pick a monster to battle.";
-			std::cout << "\n\n1. Weak\n2. Average\n3. Strong";
-			std::string choice = getInput();
-
-			std::cout << "\n\n\n\n\n";
-
-			//set what monster appears
-			//enemy.setMobile("name", exp, hpbase, dmgbase, defbase, hpmult, dmgmult, defmult)
-			//FIXME make function to make monsters
-			if (choice == "1" || choice == "Weak" || choice == "weak" || choice == "W" || choice == "w" || choice == "\0")
-			{
-				enemy.setMobile("Weak Generic Monster", 0, 30, 15, 3, 0.2f, 0.2f, 0.2f); // Creature.cpp
-				isChoosing = false;
-			}
-
-			else if (choice == "2" || choice == "Average" || choice == "average" || choice == "A" || choice == "a")
-			{
-				enemy.setMobile("Average Generic Monster", 8, 30, 15, 3, 0.2f, 0.2f, 0.2f);
-				isChoosing = false;
-			}
-
-			else if (choice == "3" || choice == "Strong" || choice == "strong" || choice == "S" || choice == "s")
-			{
-				enemy.setMobile("Strong Generic Monster", 18, 30, 15, 3, 0.2f, 0.2f, 0.2f);
-				isChoosing = false;
-			}
-			else
-				std::cout << " <<- Invalid input ->>\n\n\n";
-
-		}// end isChoosing
-*/
-
-		//FIXME add overload and arrays to do this
-		enemy.setMobile("Monster", ptrPlayer->exp, 30, 15, 3, 0.2f, 0.2f, 0.2f); // Creature.cpp
+		// FIXME make function to do all this
+		ptrMobile->name = returnCreatureString(ptrMobile->id, 6);
+		ptrMobile->setMobileLevel(ptrPlayer);
+		ptrMobile->update();
+		ptrMobile->updateHitPoints();
 
 		// starting battle
 		clearScreen(); // Interface.cpp
-		std::cout << "A wild " << enemy.name << " appeared!";
+		std::cout << "A wild Lv: "<< enemy.level << " " << enemy.name << " appeared!";
 		isBattling = true;
 		while (isBattling == true)
 		{
@@ -96,11 +85,12 @@ namespace TextGame
 				{
 					clearScreen(); // Interface.cpp
 					std::cout << "\n\nYou Win!";
-					ptrPlayer->getExp(enemy.rewardExp);
+					ptrPlayer->addExp(ptrPlayer->getRewardExp(ptrMobile));
 
-					std::cout << "\nYou gained " << enemy.rewardExp << " exp";
+					std::cout << "\nYou gained " << ptrPlayer->getRewardExp(ptrMobile) << " exp";
 					ptrPlayer->update();
 
+					result = 1;
 					isBattling = false;
 				}
 
@@ -131,11 +121,10 @@ namespace TextGame
 					if (choice == "1" || choice == "Restart" || choice == "restart" || choice == "R" || choice == "r" || choice == "\0")
 					{// FIXME goBack()
 						//TextGame::goBack(); // Interface.cpp
-						isPlaying = false;
-						isCharNamed = false;
+						result = 99;
 						isBattling = false;
 
-						ptrPlayer->heal(ptrPlayer->hitPointsMax);
+						ptrPlayer->heal(ptrPlayer->HpStaSpeMax);
 						clearScreen(); // Interface.cpp
 					}
 					// exit
@@ -143,8 +132,7 @@ namespace TextGame
 					{
 						// FIXME goBack()
 						//TextGame::goBack(); // Interface.cpp
-						isPlaying = false;
-						isCharNamed = false;
+						result = 100;
 						isBattling = false;
 						running = false;
 					}
@@ -159,25 +147,17 @@ namespace TextGame
 			else if (choice == "2" || choice == "Run" || choice == "run" || choice == "R" || choice == "r")
 			{
 				clearScreen(); // Interface.cpp
-				
 				std::cout << "You ran away.";
+
+				result = 1;
 				isBattling = false;
 			}
 			else
 				std::cout << " <<- Invalid input ->>\n\n\n";
 		} // end is battling
 
-		return;
+		return result;
 	}
 
-
-	void customMobile(Mobile *ptrMobile)
-	{
-		
-		std::string name = getInput();
-		int exp, levelCap, hitPointsCap, damageCap, defenseCap;
-		int hitPointsBase, damageBase,  defenseBase;
-		float hitPointsMult, damageMult,  defenseMult;
-	}
 
 } // end TextGame
