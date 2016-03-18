@@ -9,7 +9,7 @@
 )
 )				
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
-#include <TextGame/Globals.hpp>
+#include <TextGame/Player/PlayerStatistics.hpp>
 
 
 namespace TextGame
@@ -52,6 +52,7 @@ namespace TextGame
 		int loc_Row;
 		int loc_Col;
 		int direction;
+		int visible;
 
 		std::string name = "Adventurer";
 

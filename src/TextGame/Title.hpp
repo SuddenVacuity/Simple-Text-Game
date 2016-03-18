@@ -9,7 +9,9 @@
 )
 )				
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
-#include <TextGame/Interface/Interface.hpp>
+
+#include <TextGame/Game.hpp>
+#include <TextGame/Testing/Test.hpp>
 
 namespace TextGame
 {

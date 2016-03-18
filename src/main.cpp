@@ -14,9 +14,13 @@ x	create area to move around in					 --T
 x	add collision									 --
 x	make encounters random							 --/ T T T \
 x	make array of monster info						 --[ _ O _ ] s =
-	make rooms come from a single struct
+x	make rooms come from a single struct
 x	set gamemodes
-	add interaction with rooms
+x	add interaction with rooms
+	add interaction functions
+	make function to load and unload rooms in game
+	make load/unload function offset the room so more than one room can be loaded at a time
+	add a room manager for loading/unloading rooms
 	make function to handle encounters
 	add weapon/armor/skill/class
 	load creature/room/weapon/armor/skill/class info from external files
@@ -25,20 +29,29 @@ x	set gamemodes
 	Always TODO: clean up
 
 =================
-FILE MAP
+HEADER MAP
 =================
-CleanUp.hpp >> Globals.hpp >> start all file lines with these
 
-			PlayerStatistics.hpp >> Combat.hpp		   testRoom.hpp >> Rooms.hpp >> Map.hpp 
-CreatureInfo.hpp >> Creature.hpp >> Combat.hpp >> Navigation.hpp >> Movement.hpp >> Map.hpp >> Game.hpp >> main.cpp
-				   Interface.hpp >> Combat.hpp												   Test.hpp >> main.cpp
-
+Globals.hpp
+CleanUp.hpp
+Interface/Interface.hpp
+Player/Playerstatistics.hpp
+Creature/CreatureInfo.hpp
+Creature/Creature.hpp
+Combat/Combat.hpp
+Navigation/Rooms.hpp
+Navigation/Rooms/RoomInfo.hpp
+Navigtion/Navigation.hpp
+Navigation/Movement.hpp
+Player/PlayerActions.hpp
+Navigation/Map.hpp
+Game.hpp ||| Testing/Test.hpp
+Title.hpp
+main.cpp
 
 */
 
 #include <TextGame/Title.hpp>
-#include <TextGame/Game.hpp>
-#include <TextGame/Testing/Test.hpp>
 
 int main (int argc, char* argv)
 {

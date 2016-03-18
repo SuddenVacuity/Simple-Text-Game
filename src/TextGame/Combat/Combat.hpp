@@ -9,8 +9,6 @@
 )
 )				
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
-#include <TextGame/Interface/Interface.hpp>
-#include <TextGame/Player/PlayerStatistics.hpp>
 #include <TextGame/Creature/Creature.hpp>
 
 namespace TextGame

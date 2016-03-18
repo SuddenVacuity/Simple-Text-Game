@@ -5,7 +5,6 @@
 
 namespace TextGame
 {
-	void testingRoomMenu();
 	int TestingRoom(Creature* ptrPlayer, int& gameMode);
 
 

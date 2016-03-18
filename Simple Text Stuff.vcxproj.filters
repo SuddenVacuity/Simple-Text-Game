@@ -24,9 +24,6 @@
     <ClCompile Include="src\TextGame\Navigation\Map.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\TextGame\Navigation\Rooms.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\TextGame\Creature\Creature.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -78,9 +75,6 @@
     <ClCompile Include="src\TextGame\Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\TextGame\Navigation\Rooms\testRoom.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\TextGame\Navigation\Rooms\RoomString.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -88,6 +82,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\TextGame\Navigation\Rooms\TeRo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextGame\Navigation\Rooms\RoomInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextGame\Navigation\Rooms\Maps\Instructions_AddNewRoom.txt">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextGame\Player\PlayerActions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextGame\Navigation\Rooms.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -123,9 +129,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\TextGame\Navigation\Navigation.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\TextGame\Navigation\Rooms.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\TextGame\Globals.hpp">
@@ -446,10 +449,13 @@
     <ClInclude Include="src\TextGame\Game.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\TextGame\Navigation\Rooms\testRoom.hpp">
+    <ClInclude Include="src\TextGame\Navigation\Rooms\RoomInfo.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\TextGame\Navigation\Rooms\RoomInfo.hpp">
+    <ClInclude Include="src\TextGame\Player\PlayerActions.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TextGame\Navigation\Rooms.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

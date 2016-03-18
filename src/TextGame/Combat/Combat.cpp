@@ -32,12 +32,11 @@ namespace TextGame
 	)				(Creature* ptrPlayer, int& gameMode)
 	)					must be a pointer of class Creature to enter battle (will generally be player)
 	)					gameMode = game mode
-	)				return int outcome; 0 = error, 1 = win, 1 = ran, 0 = restart, 100 = quit
+	)				return int; gamemode
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
 	int startBattle(Creature* ptrPlayer, int& gameMode)
 	{
-		int result = 1;
 		clearScreen(); // Interface.cpp
 
 		// id, level, locRow, locCol
@@ -89,8 +88,6 @@ namespace TextGame
 
 					std::cout << "\nYou gained " << ptrPlayer->getRewardExp(ptrMobile) << " exp";
 					ptrPlayer->update();
-
-					result = 1;
 					isBattling = false;
 				}
 
@@ -121,7 +118,6 @@ namespace TextGame
 					if (choice == "1" || choice == "Restart" || choice == "restart" || choice == "R" || choice == "r" || choice == "\0")
 					{// FIXME goBack()
 						//TextGame::goBack(); // Interface.cpp
-						result = 0;
 						gameMode = 99;
 						isBattling = false;
 
@@ -133,7 +129,6 @@ namespace TextGame
 					{
 						// FIXME goBack()
 						//TextGame::goBack(); // Interface.cpp
-						result = 0;
 						gameMode = 100;
 						isBattling = false;
 					}
@@ -150,14 +145,13 @@ namespace TextGame
 				clearScreen(); // Interface.cpp
 				std::cout << "You ran away.";
 
-				result = 2;
 				isBattling = false;
 			}
 			else
 				std::cout << " <<- Invalid input ->>\n\n\n";
 		} // end is battling
 
-		return result;
+		return gameMode;
 	}
 
 

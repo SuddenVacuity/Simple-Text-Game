@@ -9,15 +9,15 @@
 )
 )			
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
-#include <TextGame/Globals.hpp>
-#include <TextGame/Navigation/Rooms.hpp>
-#include <TextGame/Navigation/Movement.hpp>
 
-// may not use these
+#include <TextGame/Player/PlayerActions.hpp>
+
+
 
 namespace TextGame
 {
-	void genMap(int line, int** data, int playerDirection);
+	void genMap(int line, char** data, int playerDirection);
+	void printMap(Creature* ptrPlayer, Room* ptrRoom);
 
 } // end TextGame
 

@@ -15,6 +15,7 @@ namespace TextGame
 
 	void clearData(int* data);
 	void clearData(int** data, int rows);
+	void clearData(char** data, int rows);
 
 } // end TextGame
 

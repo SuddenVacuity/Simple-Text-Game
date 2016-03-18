@@ -1,0 +1,159 @@
+
+
+// Instructions for adding rooms
+// In all of these change roomName to the name of your rooms cpp file
+// 
+// create a cpp file named: roomName.cpp
+// 
+// ==========================================================================
+// ==========================================================================
+// 
+// In roomName.cpp:
+// Define the size of the room. These are used to make room data arrays.
+// 
+// 	static const int roomName_Rows = 10;
+// 	static const int roomName_Cols = 10;
+// 
+// ==========================================================================
+// ==========================================================================
+// 
+// In roomName.cpp:
+// Create char array that will display as the map in the command line.
+// This is what displays so it can be anything as long as its a char.
+// This must be the same size as the room.
+// 
+// 	char roomName_roomMap[roomName_Rows][roomName_Cols] = {{}};
+// 
+// ==========================================================================
+// ==========================================================================
+// 
+// In roomName.cpp:
+// Create array to decide how the player interacts with the room.
+// This must be the same size as the room.
+// 
+// 	int roomObject[roomName_Rows][roomName_Cols] = {{}};
+// 
+// All of these can show a string or use a function based on the tens and ones digit
+// 	ex) 022 will be solid and will show roomString[roomId][22] from roomString.cpp when interacted with.
+// 
+// 0~99		solid, calls string (must not be spaced with zeros (001) use spaces instead (  1))
+// 100~199		can walk, calls string
+// 200~299		can walk,  with encounters(based off room set and rate), calls string
+// 300~399		can walk, hides the player ,calls string
+// 400~499		can walk, hides the player, with encounters(based off room set and rate), calls string
+// 500~799		solid, calls function
+// 800+		can walk, calls function(mostly for portal functions)
+// 
+//  - functions not implemented
+//  - fuctions will all be in one list so just use the number of the one you want
+// 
+// ==========================================================================
+// ==========================================================================
+// 
+// In RoomInfo.hpp:
+// Add these lines.
+// 
+// 	char** roomName_returnMap();
+// 	int roomName_returnObject(int* location);
+// 
+// 
+// ==========================================================================
+// ==========================================================================
+// 
+// In roomName.cpp:
+// Add these 2 functions.
+// 
+// 	int roomName_returnObject(int* location)
+// 	{
+// 		return roomName_roomObject[location[0]][location[1]];
+// 	}
+// 	
+// 	char** roomName_returnMap()
+// 	{
+// 		char** data = new char*[roomName_Rows];
+// 	
+// 		// generate table
+// 		for (int i = 0; i < roomName_Rows; i++)
+// 		{
+// 			data[i] = new char[roomName_Cols];
+// 			for (int j = 0; j < roomName_Cols; j++)
+// 				data[i][j] = roomName_roomMap[i][j];
+// 		}
+// 		return data;
+// 	}
+// 	
+// []===========================================================================[]
+// []===========================================================================[]
+// []																			[]
+// [] ALL PARTS OF A ROOM AFTER THIS MUST BE IN THE SAME POSITION IN EACH ARRAY []
+// []																			[]
+// []===========================================================================[]
+// []===========================================================================[]
+// 
+// In RoomString.cpp:
+// Add this to the end of the list of strings in roomString[][roomStringVal]
+// Name and description must be the name and description for the room
+// All the others are the string number that returns from roomObject[][]
+// 
+// 		{ "[0]",		
+// 		/*name, desc*/"[name]", "[description]", 
+// 		/*basic secenery action*/"[3]", "[4]", "[5]", "[6]", "[7]", "[8]", "[9]",
+// 		/*signs and messages*/"[10]", "[11]", "[12]", "[13]", "[14]", "[15]", "[16]", "[17]", 
+// 		/*signs and messages*/"[18]", "[19]", "[20]", "[21]", "[22]", "[23]", "[24]", "[25}", },
+// 
+// ==========================================================================
+// ==========================================================================
+// 		
+// In RoomInteger.cpp:
+// Add this to the end of the list of numbers in roomInteger[][roomIntVal]
+// 
+// 		{ 0, 10, 10, 1, 10 },
+// 
+// where:
+// 	{ times visited, rows, cols, encounter set, encounter rate }
+// 
+// ==========================================================================
+// ==========================================================================
+// 
+// In RoomInfo.cpp:
+// Add the rooms returnObject function to array in returnObjectLocation()
+// 
+// 	int returnObjectLocation(int id, int* location)
+// 	{
+// 		int ObjectLocation[] =
+// 		{
+// 			...,
+// 			...,s
+// 			...,
+// 			TeRo_returnObject(location), 
+// 			roomName_returnObject(location), // id roomName.cpp
+// 		};
+// 
+// 		return ObjectLocation[id];
+// 	}
+// 
+// And the rooms returnMap function to array in returnMapDataArray()
+// 
+// 	char** returnMapArray(int id)
+// 	{
+// 		char** MapArray[] =
+// 		{
+// 			...,
+// 			...,
+// 			...,
+// 			TeRo_returnMap(),
+// 			roomName_returnMap(), // id roomName.cpp
+// 		};
+// 
+// 		return MapArray[id];
+// 	}
+// 
+// FIXME add funtion array to this once it's implemented
+// 
+// 
+// 
+// ==========================================================================
+// ==========================================================================
+// 
+// You can now use each room just by setting a room struct to the rooms id.
+// A rooms id is its position in the arrays.

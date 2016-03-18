@@ -14,14 +14,14 @@ namespace TextGame
 {
 	/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	)				getNavData (Navigation.hpp)
-	)					copies data from roomObject based off player location and map size, handles areas outside roomObjects range
+	)					copies data from returnRoomMap based off player location and map size, handles areas outside roomObjects range
 	)
-	)				(int* mLocation, int** data, int* size)
-	)					mLocation = player location , data = room data for getNavData() , size = size of the room (to stay in limits)
+	)				(int* mLocation, char** data, int* size)
+	)					mLocation = player location , data = roomMap data for getNavData() , size = size of the room (to stay in limits)
 	)
-	)				return new int** navData; needs to be deleted
+	)				return new char** navData; needs to be deleted
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
-	int** getNavData(int* mLocation, int** data, int* size)
+	char** getNavData(int* mLocation, char** data, int* size, int playerVisible)
 	{
 		//set map edges with player in the center of the map
 		//half a row is found with columns
@@ -40,19 +40,19 @@ namespace TextGame
 		int playerLocCol = g_mapSizeCol / 2 - 1;
 
 		//FIXME prevent memory leak
-		int** navData = new int*[g_mapSizeRow];
+		char** navData = new char*[g_mapSizeRow];
 	
 		// populate create data based on player location
 		for (int i = sideCol[0], l = 0; i < sideCol[1]; i++, l++)
 		{
-			navData[l] = new int[g_mapSizeCol];
+			navData[l] = new char[g_mapSizeCol];
 			for (int j = sideRow[0], m = 0; j < sideRow[1]; j++, m++)
 			{
 				// check limits on room data, -1 because size is array size
 				if(j < 0 || i < 0 || j > size[1] - 1|| i > size[0] - 1)
 				{
 					// set areas with no map data to this
-					navData[l][m] = 1000;
+					navData[l][m] = ' ';
 				}
 				else
 					navData[l][m] = data[i][j];
@@ -60,7 +60,8 @@ namespace TextGame
 		}
 
 		//set Player on map
-		navData[playerLocRow][playerLocCol] = 999;
+		if(playerVisible == 1)
+			navData[playerLocRow][playerLocCol] = '`';
 
 		return navData;
 	}

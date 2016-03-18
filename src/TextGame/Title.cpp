@@ -19,6 +19,7 @@ namespace TextGame
 		TextGame::clearScreen(); // Interface.cpp
 		std::cout << "[Insert Title Here]\n\n\n\n\n\n\n";
 
+		std::cout << "press p to enter the test room\n";
 		std::cout << "\n1. New Game";
 		std::cout << "\n2. Continue << not implemented";
 		std::cout << "\n3. Quit";

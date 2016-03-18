@@ -28,6 +28,7 @@ namespace TextGame
 		loc_Row = 0;
 		loc_Col = 0;
 		direction = 0;
+		visible = 1;
 		
 		std::string name = "Adventurer"; // CreatureInfo.hpp
 
@@ -102,6 +103,7 @@ namespace TextGame
 		loc_Row = c_Row;
 		loc_Col = c_Col;
 		direction = 0;
+		visible = 1;
 
 		std::string name = "Adventurer"; // CreatureInfo.hpp
 

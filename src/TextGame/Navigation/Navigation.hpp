@@ -9,13 +9,12 @@
 )
 )			
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
-#include <TextGame/Navigation/Rooms.hpp>
-#include <TextGame/Combat/Combat.hpp>
+#include <TextGame/Navigation/Rooms/RoomInfo.hpp>
 
 namespace TextGame
 {
 
-	int** getNavData(int* mLocation, int** data, int* size);
+	char** getNavData(int* mLocation, char** data, int* size, int playerVisible);
 
 } // end TextGame
 

@@ -23,8 +23,8 @@ namespace TextGame
 	int roomInteger[][roomIntVal] =
 	{	//   { times visited, rows, cols, encouter set, encounter rate }
 		{ 0, 1, 1, 0, 0 }, // 0
-		{ 0, 16, 16, 0, 0 }, // 1 testRoom
-		{ 0, 16, 16, 0, 0 }, // 2 testRoom2
+		{ 0, 16, 16, 0, 10 }, // 1 testRoom
+		{ 0, 16, 16, 0, 10 }, // 2 testRoom2
 		{ 0, 26, 26, 1, 5 }, // 3 town
 		{ 0, 36, 36, 2, 10 }, // 4 forest
 		{ 0, 51, 51, 3, 10 }, // 5 cave
@@ -43,8 +43,9 @@ namespace TextGame
 		return roomInteger[id][num];
 	}
 
-	void setRoomInfo(int id, testRoom* ptrRoom) // get information and apply it to room
+	void setRoomInfo(int id, Room* ptrRoom) // get information and apply it to room
 	{
+		ptrRoom->id = id;
 		ptrRoom->roomTimesVisited = returnRoomInteger(id, 0);
 		ptrRoom->roomRows = returnRoomInteger(id, 1);
 		ptrRoom->roomColumns = returnRoomInteger(id, 2);

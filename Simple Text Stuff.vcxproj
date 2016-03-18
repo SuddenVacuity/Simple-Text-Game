@@ -172,13 +172,15 @@
     <ClCompile Include="src\TextGame\Navigation\Movement.cpp" />
     <ClCompile Include="src\TextGame\Navigation\Navigation.cpp" />
     <ClCompile Include="src\TextGame\Navigation\Rooms.cpp" />
+    <ClCompile Include="src\TextGame\Navigation\Rooms\Maps\Instructions_AddNewRoom.txt" />
     <ClCompile Include="src\TextGame\Items\Armor.cpp" />
     <ClCompile Include="src\TextGame\Items\Consumable.cpp" />
     <ClCompile Include="src\TextGame\Items\Weapons.cpp" />
+    <ClCompile Include="src\TextGame\Navigation\Rooms\RoomInfo.cpp" />
     <ClCompile Include="src\TextGame\Navigation\Rooms\RoomInteger.cpp" />
     <ClCompile Include="src\TextGame\Navigation\Rooms\RoomString.cpp" />
     <ClCompile Include="src\TextGame\Navigation\Rooms\TeRo.cpp" />
-    <ClCompile Include="src\TextGame\Navigation\Rooms\testRoom.cpp" />
+    <ClCompile Include="src\TextGame\Player\PlayerActions.cpp" />
     <ClCompile Include="src\TextGame\Player\PlayerStatistics.cpp" />
     <ClCompile Include="src\TextGame\Testing\Test.cpp" />
     <ClCompile Include="src\TextGame\Title.cpp" />
@@ -300,7 +302,7 @@
     <ClInclude Include="src\TextGame\Items\Consumable.hpp" />
     <ClInclude Include="src\TextGame\Items\Weapons.hpp" />
     <ClInclude Include="src\TextGame\Navigation\Rooms\RoomInfo.hpp" />
-    <ClInclude Include="src\TextGame\Navigation\Rooms\testRoom.hpp" />
+    <ClInclude Include="src\TextGame\Player\PlayerActions.hpp" />
     <ClInclude Include="src\TextGame\Player\PlayerStatistics.hpp" />
     <ClInclude Include="src\TextGame\Testing\Test.hpp" />
     <ClInclude Include="src\TextGame\Title.hpp" />
