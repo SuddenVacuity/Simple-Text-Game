@@ -87,6 +87,41 @@ namespace TextGame
 	{
 		std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
 	}
+	/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	)				quitRestart
+	)					quit or restart options
+	)
+	)				(int& gameMode)
+	)					
+	)
+	)				return int: gameMode
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
+	int quitRestart(int& gameMode)
+	{
+		std::cout << "\nWould you like to quit or restart?\nPress Q to quit, R to restart or any thing else to continue.";
+		char choice = _getch();
 
+		if (choice == 'R' || choice == 'r')
+		{
+			clearScreen();
+			std::cout << "Are you sure you want to restart?\nPress Y to restart.\n\n\n";
+			char yesNo = _getch();
 
+			if (yesNo == '1' || yesNo == 'Y' || yesNo == 'y')
+				gameMode = 99;
+		}
+
+		// quit
+		else if (choice == 'Q' || choice == 'q')
+		{
+			clearScreen();
+			std::cout << "Are you sure you want to quit?\nPress Y to quit.\n\n\n";
+			char yesNo = _getch();
+
+			if (yesNo == '1' || yesNo == 'Y' || yesNo == 'y')
+				gameMode = 100;
+		}
+
+		return gameMode;
+	}
 } // end TextGame

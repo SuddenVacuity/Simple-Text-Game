@@ -17,6 +17,7 @@ x	make array of monster info						 --[ _ O _ ] s =
 x	make rooms come from a single struct
 x	set gamemodes
 x	add interaction with rooms
+	find that memory leak
 	add interaction functions
 	make function to load and unload rooms in game
 	make load/unload function offset the room so more than one room can be loaded at a time
@@ -114,8 +115,11 @@ ptrPlayer->updateHitPoints(); // Creature.cpp
 
 	gameMode = TextGame::mainGame(ptrPlayer, gameMode); // Game.cpp
 
+	gameMode = TextGame::winScreen(gameMode);
+
 	if(gameMode == 99)
 		gameMode = 0;
+	
 
 }// end game
 	return 0;

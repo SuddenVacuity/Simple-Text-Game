@@ -21,13 +21,13 @@ namespace TextGame
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 	const int roomIntVal = 5;
 	int roomInteger[][roomIntVal] =
-	{	//   { times visited, rows, cols, encouter set, encounter rate }
+	{	//   { times visited, rows, cols, encounter set, encounter rate }
 		{ 0, 1, 1, 0, 0 }, // 0
 		{ 0, 16, 16, 0, 10 }, // 1 testRoom
 		{ 0, 16, 16, 0, 10 }, // 2 testRoom2
-		{ 0, 26, 26, 1, 5 }, // 3 town
-		{ 0, 36, 36, 2, 10 }, // 4 forest
-		{ 0, 51, 51, 3, 10 }, // 5 cave
+		{ 0, 30, 30, 1, 10 }, // 3 forest
+		{ 0, 30, 30, 2, 5 }, // 4 town
+		{ 0, 36, 36, 3, 10 }, // 5 cave
 	};
 	/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	)				returnRoomInteger (CreatureInfo.hpp)

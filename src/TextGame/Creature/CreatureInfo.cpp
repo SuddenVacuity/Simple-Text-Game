@@ -342,7 +342,20 @@ namespace TextGame
 	{
 		return pow(ptrCreature->level , 2) * ptrCreature->rewardExp + 50;
 	}
-
+	/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	)				setLocation (CreatureInfo.hpp)
+	)					set the location of a creature
+	)
+	)				(int row, int col)
+	)					row = row to move to , col = column to move to
+	)
+	)				return void:
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
+	void Creature::setLocation(int row, int col)
+	{
+		loc_Row = row;
+		loc_Col = col;
+	}
 	//====================================================
 	//=============FOR NON PLAYER ONLY====================
 	//====================================================

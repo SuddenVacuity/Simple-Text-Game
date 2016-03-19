@@ -64,6 +64,8 @@ namespace TextGame
 	std::string getInput(); // get input
 	int getNumber(); // get input
 	void clearScreen();
+	int winScreen(int& gameMode); // Win.cpp
+	int quitRestart(int& gameMode);
 
 } // end TextGame
 

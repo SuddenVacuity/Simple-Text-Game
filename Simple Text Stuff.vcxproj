@@ -172,7 +172,8 @@
     <ClCompile Include="src\TextGame\Navigation\Movement.cpp" />
     <ClCompile Include="src\TextGame\Navigation\Navigation.cpp" />
     <ClCompile Include="src\TextGame\Navigation\Rooms.cpp" />
-    <ClCompile Include="src\TextGame\Navigation\Rooms\Maps\Instructions_AddNewRoom.txt" />
+    <ClCompile Include="src\TextGame\Navigation\Rooms\Maps\Forest.cpp" />
+    <ClCompile Include="src\TextGame\Navigation\Rooms\Maps\_AddNewRoom.txt" />
     <ClCompile Include="src\TextGame\Items\Armor.cpp" />
     <ClCompile Include="src\TextGame\Items\Consumable.cpp" />
     <ClCompile Include="src\TextGame\Items\Weapons.cpp" />
@@ -184,6 +185,7 @@
     <ClCompile Include="src\TextGame\Player\PlayerStatistics.cpp" />
     <ClCompile Include="src\TextGame\Testing\Test.cpp" />
     <ClCompile Include="src\TextGame\Title.cpp" />
+    <ClCompile Include="src\TextGame\Interface\Win.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="external\SFML-2.3.2\include\SFML\Audio.hpp" />

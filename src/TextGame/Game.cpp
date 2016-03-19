@@ -17,115 +17,82 @@ namespace TextGame
 	{
 		if(gameMode != 1)
 			return gameMode;
-
-		while (gameMode == 1)
+		else
 		{
-			// update stats
-			ptrPlayer->update(); // Creature.cpp
-	
-								//TextGame::clearScreen(); // Interface.cpp
-			std::cout << "\n==================================";
-			std::cout << "\nReach level 15 to win.";
-			std::cout << "\nlevel " << ptrPlayer->level << "/15";
-			std::cout << "\n\nEnter a number to make a choice.";
-	
-	
-			std::cout << "\n1. Battle\n2. Check\n3. Heal";
-	
-			if (ptrPlayer->level >= 15)
-				std::cout << "\n8. Win\n";
-	
-			std::cout << "\n\n9. Restart 10. Quit";
-	
-			std::string choice = TextGame::getInput(); // Interface.cpp
-	
-			std::cout << "\n\n\n\n\n";
-	
-			// battle monster
-			if (choice == "1" || choice == "Battle" || choice == "battle" || choice == "B" || choice == "b" || choice == "\0")
+			TextGame::Room * room = new TextGame::Room; // remember to delete
+			setRoomInfo(3, room); // RoomInteger.cpp
+			int tempInteract = 0;
+
+			ptrPlayer->setLocation(9, 3);
+
+			while (gameMode == 1)
 			{
-			TextGame:startBattle(ptrPlayer, gameMode); // Combat.cpp
-			}
-	
-			// check character
-			else if (choice == "2" || choice == "Check" || choice == "check" || choice == "C" || choice == "c")
-			{
-				TextGame::clearScreen(); // Interface.cpp
-				std::cout << "\n==================================";
-				std::cout << "\nCharacter Information:";
-				std::cout << "\n\nName: " << ptrPlayer->name;
-				std::cout << "\nLevel: " << ptrPlayer->level;
-				std::cout << "\nEXP: " << ptrPlayer->exp;
-				std::cout << "\n\nHit Points: " << ptrPlayer->hitPoints;
-				std::cout << "\nDamage: " << ptrPlayer->damage;
-				std::cout << "\nDefense: " << ptrPlayer->defense << "<-- Does nothing atm.";
-	
+				// update stats
+				ptrPlayer->update(); // Creature.cpp
+
 				std::cout << "\n\n";
-			}
+
+				printMap(ptrPlayer, room); // Map.cpp
+
+				// check if player pressed interact
+				std::cout << "\n                 ";
+				if (tempInteract == 1)
+					std::cout << playerInteract(ptrPlayer, room); // PlayerActions.cpp
+				tempInteract = 0;
+
+				std::cout << "\n1. Check Stats\n2. Heal";
 	
-			//rest
-			else if (choice == "3" || choice == "Heal" || choice == "heal" || choice == "H" || choice == "h")
-			{
-				TextGame::clearScreen(); // Interface.cpp
-				ptrPlayer->heal(ptrPlayer->HpStaSpeMax); // Creature.cpp
-				std::cout << "You feel rested and ready for battle.";
+				if (ptrPlayer->level >= 5)
+					std::cout << "\n8. Win\n";
 	
-				std::cout << "\n\n";
-			}
+				std::cout << "\n\n9. Quit";
 	
-			// check if win
-			else if (choice == "8" || choice == "Win" || choice == "win" || choice == "W" || choice == "w")
-			{
-				if (ptrPlayer->level >= 15)
+				char choice = _getch(); // Interface.cpp
+
+				clearScreen();
+														   //move
+				if (choice == 'w' || choice == 'W' || choice == 'a' || choice == 'A' || choice == 's' || choice == 'S' || choice == 'd' || choice == 'D')
 				{
-					std::cout << "You Won!\nThanks for playing!";
-					std::cout << "\n\n1. Restart 2. Exit";
+					moveCreature(ptrPlayer, room, choice, gameMode);
+				}
+
+				else if (choice == ' ')
+					tempInteract = 1;
 	
-					std::string choice = TextGame::getInput(); // Interface.cpp
-	
-					if (choice == "1" || choice == "Restart" || choice == "restart" || choice == "R" || choice == "r" || choice == "\0")
-					{
-						TextGame::clearScreen(); // Interface.cpp
-						gameMode = 99;
-						// FIXME goBack()
-						//TextGame::goBack(); // Interface.cpp
-					}
-					else if (choice == "2" || choice == "Quit" || choice == "quit" || choice == "Q" || choice == "q")
-					{
-						// FIXME goBack()
-						//TextGame::goBack(); // Interface.cpp
-						gameMode = 100;
-					}
-					else
-						std::cout << "Invaid input.\n\n";
+				// check character
+				else if (choice == '1'|| choice == 'C' || choice == 'c')
+				{
+					getCreatureStats(ptrPlayer); // Creature.cpp
 				}
 	
+				//rest
+				else if (choice == '2' || choice == 'H' || choice == 'h')
+				{
+					TextGame::clearScreen(); // Interface.cpp
+					ptrPlayer->heal(ptrPlayer->HpStaSpeMax); // CreatureInfo.cpp
+					std::cout << "You feel rested and ready for battle.";
+	
+					std::cout << "\n\n";
+				}
+	
+				// check if win
+				else if (choice == '8' || choice == 'W' || choice == 'w')
+				{
+					if (ptrPlayer->level >= 5)
+						gameMode = 90;
+				}
+	
+				//restart
+				else if (choice == '9' || choice == 'Q' || choice == 'q')
+					gameMode = quitRestart(gameMode);
+	
 				else
-					std::cout << "You can't win yet.\n\n";
+					std::cout << "Invaid input.\n\n";
+	
 			}
-	
-			//restart
-			else if (choice == "9" || choice == "Restart" || choice == "restart")
-			{
-				TextGame::clearScreen(); // Interface.cpp
-				gameMode = 99;
-				// FIXME goBack()
-				//TextGame::goBack(); // Interface.cpp
-			}
-	
-			// quit
-			else if (choice == "10" || choice == "Quit" || choice == "quit" || choice == "Q" || choice == "q")
-			{
-				gameMode = 100;
-				// FIXME goBack()
-				//TextGame::goBack(); // Interface.cpp
-			}
-	
-			else
-				std::cout << "Invaid input.\n\n";
-	
+			return gameMode;
 		}
-		return gameMode;
+
 	}
 	
 }// end TextGame

@@ -63,9 +63,11 @@ namespace TextGame
 
 			std::cout << "\n\n";
 
-			std::string choice = getInput(); // Inteface.cpp
+			char choice = _getch(); // Inteface.cpp
 
-			if (choice == "1" || choice == "Attack" || choice == "attack" || choice == "A" || choice == "a" || choice == "\0")
+			clearScreen();
+
+			if (choice == '1' || choice == '\0')
 			{
 				// make sure hit points don't go under 0
 				if (enemy.hitPoints < ptrPlayer->damage)
@@ -112,10 +114,10 @@ namespace TextGame
 					std::cout << "\n\n\nYou died.\nGAME OVER.";
 					std::cout << "\n\n1. Restart 2. Quit";
 
-					std::string choice = getInput(); // Interface.cpp
+					char choice = _getch(); // Interface.cpp
 
 					// restart
-					if (choice == "1" || choice == "Restart" || choice == "restart" || choice == "R" || choice == "r" || choice == "\0")
+					if (choice == '1' || choice == 'r' || choice == 'R')
 					{// FIXME goBack()
 						//TextGame::goBack(); // Interface.cpp
 						gameMode = 99;
@@ -125,7 +127,7 @@ namespace TextGame
 						clearScreen(); // Interface.cpp
 					}
 					// exit
-					else if (choice == "2" || choice == "Quit" || choice == "quit" || choice == "Q" || choice == "q")
+					else if (choice == '2' || choice == 'q' || choice == 'Q')
 					{
 						// FIXME goBack()
 						//TextGame::goBack(); // Interface.cpp
@@ -140,7 +142,7 @@ namespace TextGame
 			} // end chose attack
 
 			//run
-			else if (choice == "2" || choice == "Run" || choice == "run" || choice == "R" || choice == "r")
+			else if (choice == '2')
 			{
 				clearScreen(); // Interface.cpp
 				std::cout << "You ran away.";

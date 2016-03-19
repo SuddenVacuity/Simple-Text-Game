@@ -46,6 +46,10 @@ namespace TextGame
 	char** TeRo_returnMap(); // be sure to delete
 	int TeRo_returnObject(int* location);
 
+
+	char** Forest_returnMap();
+	int Forest_returnObject(int* location);
+
 } // end TextGame
 
 #endif

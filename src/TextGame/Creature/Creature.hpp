@@ -13,7 +13,7 @@
 
 namespace TextGame
 {
-
+	void getCreatureStats(Creature* ptrCreature);
 } // end TextGame
 
 #endif

@@ -87,13 +87,19 @@
     <ClCompile Include="src\TextGame\Navigation\Rooms\RoomInfo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\TextGame\Navigation\Rooms\Maps\Instructions_AddNewRoom.txt">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\TextGame\Player\PlayerActions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\TextGame\Navigation\Rooms.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextGame\Interface\Win.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextGame\Navigation\Rooms\Maps\Forest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextGame\Navigation\Rooms\Maps\_AddNewRoom.txt">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

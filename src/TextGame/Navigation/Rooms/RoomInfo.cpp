@@ -7,8 +7,10 @@ namespace TextGame
 	{
 		int ObjectLocation[] =
 		{
-			0, // null
+			0, // 0 null
 			TeRo_returnObject(location), // 1 TeRo.cpp
+			TeRo_returnObject(location), // 2 TeRo.cpp
+			Forest_returnObject(location), // 3 Forest.cpp
 		};
 
 		return ObjectLocation[id];
@@ -22,6 +24,8 @@ namespace TextGame
 		{
 			TeRo_returnMap(), // call null
 			TeRo_returnMap(), // 1 TeRo.cpp
+			TeRo_returnMap(), // 2 TeRo.cpp
+			Forest_returnMap(), // 3 Forest.cpp
 		};
 
 		return MapArray[id];

@@ -87,6 +87,7 @@ namespace TextGame
 		{
 			ptrCreature->loc_Row = ptrCreature->loc_Row + move[0];
 			ptrCreature->loc_Col = ptrCreature->loc_Col + move[1];
+			ptrCreature->visible = 1;
 			trackPlayerSteps();
 		}
 		else
@@ -99,8 +100,6 @@ namespace TextGame
 		// set if creature is visible
 		if(roomData >= 300 && roomData < 500)
 			ptrCreature->visible = 0;
-		else
-			ptrCreature->visible = 1;
 
 		return gameMode;
 	}

@@ -160,6 +160,7 @@ namespace TextGame
 		int Creature::returnExpTnl();
 		int* Creature::returnLocation();
 		int Creature::getRewardExp(Creature* ptrCreature);
+		void Creature::setLocation(int row, int col);
 
 		//====================================================
 		//=============FOR NON PLAYER ONLY====================
